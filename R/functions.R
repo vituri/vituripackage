@@ -105,7 +105,7 @@ instala_rdcomclient = function() {
 #'
 #' @export
 
-monta_email_outlook = function(para = "", cc = "", bcc = "", assunto = "",
+email_outlook = function(para = "", cc = "", bcc = "", assunto = "",
                                texto_email = "", assinatura = "", anexos = "",
                                exibir_email = TRUE, enviar_email = FALSE){
   # carrega o pacote

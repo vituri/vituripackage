@@ -1,0 +1,85 @@
+library(tidyverse); library(openxlsx); library(lubridate);
+library(dbplyr); library(svDialogs); library(progress); library(magrittr)
+
+# escolhe o período
+# data_fim = "2020-05-31" %>% as_date()
+data_fim = (today() - days(2)) %>% as_date()
+data_inicio = (data_fim - days(6)) %>% as.character()
+# data_fim = (data_fim + days(1)) %>% as.character()
+
+data_fim %<>% as.character()
+
+# seleciona a pasta do arquivo como diretório de trabalho
+# setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
+
+# local do database
+local_database = "Z:/000 - Outros/00 - Analytics/Ambev/Database Ambev.db"
+
+# conecta ao sqlite
+con <- DBI::dbConnect(RSQLite::SQLite(), dbname = local_database)
+
+dados = tbl(con, "Eventos")
+
+dados =
+  dados %>%
+  select(Frota, Empresa, Eventos, DataHora, Velocidade, Endereço, `Descrição do processamento`) %>%
+  filter(DataHora >= data_inicio &
+           DataHora < paste0(data_fim, "23:59:59")) %>%
+  collect()
+
+dados$Eventos %>% unique %>% sort()
+
+dados %<>%
+  filter(
+    grepl(x = Empresa,
+          pattern = "ACHERAL|CASA|CORDOBA|CORRIENTES|MANANTIAL|MENDOZA|QUILMES|SUR|ZARATE",
+          ignore.case = TRUE)
+    )
+
+dados$Empresa %>% unique %>% sort
+
+eventos_relevantes = c("Bocejo", "Celular", "Fumando",  "Oclusão", "Olhando para baixo N1", "Olhando para baixo N2",
+                       "Sonolência N1", "Sonolência N2")
+
+dados_eventos_relevantes = dados %>% filter(Eventos %in% eventos_relevantes)
+
+dados_sem_cinto = dados %>% filter(grepl(pattern = "cint", x = `Descrição do processamento`, ignore.case = TRUE))
+
+dados_sem_cinto$Eventos = "Sem cinto"
+
+dados2 = rbind(dados_eventos_relevantes, dados_sem_cinto) %>% arrange(date(DataHora), Empresa)
+
+dados2 %<>%
+  select(-`Descrição do processamento`)
+
+dados2$Empresa %>% unique() %>% sort()
+
+nomes_splitados = dados2$Empresa %>% str_split_fixed(pattern = " - ", n = 2)
+
+dados2$Planta = nomes_splitados[,1]
+
+dados2$OL = nomes_splitados[,2]
+
+dados2 %<>% select(Frota, Empresa, Planta, OL, Eventos, DataHora, Velocidade, Endereço)
+
+data_inicio %<>%
+  as_date() %>% format("%d-%m-%Y")
+
+data_fim %<>%
+  as_date() %>% format("%d-%m-%Y")
+# data_fim = data_fim - days(1)
+# data_fim %<>% format("%d-%m-%Y")
+
+dados2 %<>%
+  arrange(date(DataHora), Empresa)
+
+dados2$Frota %<>%
+  gsub(x = ., pattern = " ", replacement = "", fixed = TRUE)
+
+dados2 %>%
+  write.xlsx(file = paste0("Base Argentina - ", data_inicio, " a ", data_fim, ".xlsx"), asTable = TRUE)
+
+
+
+
+

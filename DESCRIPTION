@@ -16,11 +16,13 @@ Imports:
     lubridate,
     openxlsx,
     svDialogs,
-    magrittr
+    magrittr,
+    fs
 Depends:
     tidyverse,
     lubridate,
     openxlsx,
     magrittr,
-    echarts4r
+    echarts4r,
+    fs
 RoxygenNote: 7.1.1

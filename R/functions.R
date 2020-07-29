@@ -106,8 +106,8 @@ instala_rdcomclient = function() {
 #' @export
 
 email_outlook = function(para = "", cc = "", bcc = "", assunto = "",
-                               texto_email = "", assinatura = "", anexos = "",
-                               exibir_email = TRUE, enviar_email = FALSE){
+                         texto_email = "", assinatura = "", anexos = "",
+                         exibir_email = TRUE, enviar_email = FALSE){
   # carrega o pacote
   require(RDCOMClient)
 
@@ -144,4 +144,77 @@ email_outlook = function(para = "", cc = "", bcc = "", assunto = "",
     Email$Send()
   }
 
+}
+
+#' Abre um arquivo usando o programa padrão do sistema operacional
+#'
+#' @description Abre arquivos no Linux e no Windows
+#'
+#' @param arquivo Uma string com o caminho do arquivo.
+#' @details Se não funcionar, use o caminho completo (em vez do caminho relativo).
+#'
+#' @export
+
+abre_arquivo = function(arquivo){
+  if (sistema_operacional == "Linux") {
+    system2(command = "xdg-open", args = arquivo)
+  } else {
+    shell.exec(arquivo)
+  }
+}
+
+#' Cria conexão com uma base do SQLite.
+#'
+#' @description Cria uma tabela 'simbólica' do SQLite.
+#'
+#' @param local_database Uma string com o caminho do database.
+#' @param nome_tabela Nome da tabela do SQLite para acessar.
+#'
+#' @return Uma conexão com o SQLite.
+#'
+#' @details Essa função retorna uma tabela
+#'   na memória. Você poderá manipular ela como se estivesse de fato,
+#'   usando os verbos do dplyr. Quando quiser realmente obter os dados
+#'   após seus comandos, utilize 'collect()'.
+#'
+#' @export
+#'
+conecta_base_sqlite = function(local_database, nome_tabela) {
+  require(DBI); require(RSQLite)
+
+  con = DBI::dbConnect(RSQLite::SQLite(),
+                       dbname = local_database)
+
+  return(tbl(con, nome_tabela))
+}
+
+
+gera_calendario = function(data_inicial, data_final = today(), dia_em_que_comeca_a_semana = "dom") {
+  dia_em_que_comeca_a_semana = "dom"
+
+  temp = seq.Date(from = "2019-12-01" %>% ymd(),
+                  to = "2019-12-07" %>% ymd, by = 1)
+
+  id = which(weekdays(x = temp, abbreviate = TRUE) == dia_em_que_comeca_a_semana, useNames = FALSE)
+
+  calendario = data.frame(Dia = seq.Date(from = temp[id],
+                                         to = temp[id] + days(7*250 - 1), by = 1))
+
+  n = length(calendario$Dia)
+
+  calendario$Semana = calendario$Dia[1]
+
+  for (i in seq(1, n, by = 7)) {
+    calendario$Semana[i:(i+6)] = calendario$Dia[i]
+  }
+
+  # calendario$Mês = calendario$Dia %>% format("%Y-%m-01")
+  #
+  # calendario$Ano = calendario$Dia %>% year() %>% as.character()
+  #
+  # calendario$Dia %<>% as.character()
+  #
+  # calendario %>% write.csv2(file = "calendario.csv", row.names = FALSE)
+  #
+  # calendario = read.csv2(file = "calendario.csv")
 }

@@ -5,7 +5,7 @@ Version: 0.1.0
 Author: G. Vituri <viturivituri@gmail.com>
 Maintainer: G. Vituri <viturivituri@gmail.com>
 Description: Funções pra mexer no Excel, manipular
-    strings, plotar no echarts, mandar emails, etc.
+    strings, plotar no echarts, mandar emails, escrever no SQLite, etc.
 License: Ta liberado
 Encoding: UTF-8
 LazyData: true
@@ -17,12 +17,13 @@ Imports:
     openxlsx,
     svDialogs,
     magrittr,
-    fs
+    DBI,
+    RSQLite
 Depends:
     tidyverse,
     lubridate,
     openxlsx,
     magrittr,
     echarts4r,
-    fs
+    svDialogs
 RoxygenNote: 7.1.1

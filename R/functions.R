@@ -10,6 +10,8 @@ tira_espaco_da_string = function(x) {
   y =
     x %>%
     gsub(pattern = " ", replacement = "", fixed = TRUE, x = .)
+
+  return(y)
 }
 
 #' Tira ponto final da string
@@ -20,10 +22,12 @@ tira_espaco_da_string = function(x) {
 #' tira_ponto_da_string("texto.com.pontos")
 #' @export
 
-tira_ponto_da_string = function(x, x1) {
+tira_ponto_da_string = function(x) {
   y =
     x %>%
     gsub(pattern = ".", replacement = "", fixed = TRUE, x = .)
+
+  return(y)
 }
 
 #' Troca ponto final por espaço na string
@@ -38,6 +42,8 @@ troca_ponto_por_espaco = function(x, x1) {
   y =
     x %>%
     gsub(pattern = ".", replacement = " ", fixed = TRUE, x = .)
+
+  return(y)
 }
 
 #' Troca espaço por ponto final na string
@@ -52,6 +58,8 @@ troca_espaco_por_ponto = function(x, x1) {
   y =
     x %>%
     gsub(pattern = " ", replacement = ".", fixed = TRUE, x = .)
+
+  return(y)
 }
 
 
@@ -79,13 +87,6 @@ set_wd_aqui = function() {
   setwd(getCurrentFileLocation())
 }
 
-#' Instala o pacote RDCOMClient (que se comunica com o pacote Office)
-#'
-
-instala_rdcomclient = function() {
-  devtools::install_github("omegahat/RDCOMClient")
-}
-
 #' Envia emails usando o Outlook
 #'
 #' @description Monte emails usando o R e envie com o Outlook, com anexos, múltiplos contatos, etc. O
@@ -109,7 +110,11 @@ email_outlook = function(para = "", cc = "", bcc = "", assunto = "",
                          texto_email = "", assinatura = "", anexos = "",
                          exibir_email = TRUE, enviar_email = FALSE){
   # carrega o pacote
-  require(RDCOMClient)
+  if (require(RDCOMClient) == FALSE) {
+    devtools::install_github("dkyleward/RDCOMClient")
+  } else {
+    require(RDCOMClient)
+  }
 
   # Open Outlook
   Outlook <- COMCreate("Outlook.Application")
@@ -180,7 +185,8 @@ abre_arquivo = function(arquivo){
 #' @export
 #'
 conecta_base_sqlite = function(local_database, nome_tabela) {
-  require(DBI); require(RSQLite)
+
+  # require(DBI); require(RSQLite)
 
   con = DBI::dbConnect(RSQLite::SQLite(),
                        dbname = local_database)
@@ -188,33 +194,127 @@ conecta_base_sqlite = function(local_database, nome_tabela) {
   return(tbl(con, nome_tabela))
 }
 
+#' Escreve dados no SQLite.
+#'
+#' @description Cria ou adiciona dados a uma tabela do SQLite
+#'
+#' @param dados_a_serem_salvos A tabela a ser salva no SQLite.
+#' @param local_database Uma string com o caminho do database.
+#' @param nome_tabela Nome da tabela do SQLite para acessar.
+#' @param append Se os dados serão adicionados ao fim da tabela do SQLite (default: TRUE)
+#' @param overwrite Se os dados sobrescreverão o que já existe no SQLite (default: FALSE)
+#'
+#' @details Use append = TRUE e overwrite = FALSE (padrão) para adicionar dados
+#' a uma tabela já existente. Para sobrescrevê-la por completo, use
+#' append = FALSE e overwrite = TRUE.
+#'
+#' @export
+#'
 
-gera_calendario = function(data_inicial, data_final = today(), dia_em_que_comeca_a_semana = "dom") {
-  dia_em_que_comeca_a_semana = "dom"
+escreve_numa_base_sqlite = function(dados_a_serem_salvos, local_database,
+                                    nome_tabela, append = TRUE,
+                                    overwrite = FALSE) {
+  # require(DBI); require(RSQLite)
 
-  temp = seq.Date(from = "2019-12-01" %>% ymd(),
-                  to = "2019-12-07" %>% ymd, by = 1)
+  con = DBI::dbConnect(RSQLite::SQLite(),
+                       dbname = local_database)
 
-  id = which(weekdays(x = temp, abbreviate = TRUE) == dia_em_que_comeca_a_semana, useNames = FALSE)
+  DBI::dbWriteTable(conn = con, name = nome_tabela,
+                    value = dados_a_serem_salvos,
+                    append = FALSE, overwrite = TRUE)
 
-  calendario = data.frame(Dia = seq.Date(from = temp[id],
-                                         to = temp[id] + days(7*250 - 1), by = 1))
+}
 
-  n = length(calendario$Dia)
+#' Gera um calendário
+#'
+#' @description Gera uma tabela com dias, semanas, mês e ano, para usar
+#' em algum left_join e assim agrupar seus dados por semana/mês/ano.
+#'
+#' @param data_inicial Data inicial do calendário.
+#' @param data_final Data final do calendário.
+#' @param dia_em_que_comeca_a_semana Iniciais do dia da semana em que
+#' a semana começa no calendário. Valores possívels:
+#' 'seg', 'ter', 'qua', 'qui', 'sex', 'sáb', 'dom'.
+#' @param semana Se TRUE, o calendário terá coluna 'Semana'.
+#' @param mes Se TRUE, o calendário terá coluna 'Mês'.
+#' @param ano Se TRUE, o calendário terá coluna 'Ano'.
+#' @param dia_character Se TRUE, a coluna 'Dia' vem como character.
+#'
+#' @return Um dataframe.
+#'
+#' @export
 
-  calendario$Semana = calendario$Dia[1]
+gera_calendario =
+  function(data_inicial = "2018-01-01",
+           data_final = today(),
+           dia_em_que_comeca_a_semana = "dom",
+           semana = TRUE,
+           mes = TRUE,
+           ano = TRUE,
+           dia_character = FALSE) {
 
-  for (i in seq(1, n, by = 7)) {
-    calendario$Semana[i:(i+6)] = calendario$Dia[i]
+    data_inicial %<>% as_date()
+
+    temp = seq.Date(from = data_inicial - days(6),
+                    to = data_inicial, by = 1)
+
+    id = which(weekdays(x = temp, abbreviate = TRUE) == dia_em_que_comeca_a_semana, useNames = FALSE)
+
+    dias_diferenca = (data_final - data_inicial) %>% as.numeric()
+
+    qtd_semanas = (dias_diferenca %/% 7) + 1
+
+    calendario = data.frame(Dia = seq.Date(from = temp[id],
+                                           to = temp[id] + days(7*qtd_semanas - 1), by = 1))
+
+    n = length(calendario$Dia)
+
+    calendario$Semana = calendario$Dia[1]
+
+    for (i in seq(1, n, by = 7)) {
+      calendario$Semana[i:(i+6)] = calendario$Dia[i]
+    }
+
+    if (semana == FALSE) {
+      calendario %<>% select(-Semana)
+    }
+
+    if (mes == TRUE){
+      calendario$Mês = calendario$Dia %>% format("%Y-%m-01")
+    }
+
+    if (ano == TRUE) {
+      calendario$Ano = calendario$Dia %>% year() %>% as.character()
+    }
+
+    if (dia_character == TRUE){
+      calendario$Dia %<>% as.character()
+    }
+
+    return(calendario)
   }
 
-  # calendario$Mês = calendario$Dia %>% format("%Y-%m-01")
-  #
-  # calendario$Ano = calendario$Dia %>% year() %>% as.character()
-  #
-  # calendario$Dia %<>% as.character()
-  #
-  # calendario %>% write.csv2(file = "calendario.csv", row.names = FALSE)
-  #
-  # calendario = read.csv2(file = "calendario.csv")
+#' Zipa arquivos.
+#'
+#' @description Cria uma pasta zipada com arquivos selecionados.
+#' @param nome_pasta_zipada Nome da pasta zipada.
+#' @param arquivos Arquivos para zipar.
+#' @param nivel_de_compressao Inteiro de 1 a 9: quanto maior, mais comprimido
+#' porém leva mais tempo.
+#'
+#' @return Um arquivo .zip no local especificado.
+#'
+#' @export
+
+zipa_arquivos = function(nome_pasta_zipada, arquivos, nivel_de_compressao = 9) {
+  if (require(zip) == FALSE) {
+    devtools::install_github("r-lib/zip")
+  } else {
+    require(zip)
+  }
+
+  zipr(zipfile = nome_pasta_zipada, files = arquivos, compression_level = nivel_de_compressao)
+
+
+
 }

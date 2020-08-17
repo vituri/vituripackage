@@ -62,6 +62,25 @@ troca_espaco_por_ponto = function(x, x1) {
   return(y)
 }
 
+#' Substitui um vetor de caracteres por outro caracter
+#'
+#' @param x Um vetor de caracteres
+#' @param de Os caracteres a serem substituídos. Pode ser um vetor.
+#' @param para O caracter pelo qual serão trocados os valores do vetor 'de'.
+#'
+#' @examples
+#' substitui_string(x = "a < b > c", de = c("<", ">"), para = "!")
+#'
+#' @export
+#'
+substitui_string = function(x, de, para = "") {
+  y = x
+  for (padrao in de) {
+    y %<>% gsub(x = ., pattern = padrao, replacement = para, fixed = TRUE)
+  }
+
+  return(y)
+}
 
 
 getCurrentFileLocation <-  function()

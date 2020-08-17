@@ -4,7 +4,7 @@
 \alias{tira_ponto_da_string}
 \title{Tira ponto final da string}
 \usage{
-tira_ponto_da_string(x, x1)
+tira_ponto_da_string(x)
 }
 \arguments{
 \item{x}{Um vetor de caracteres}

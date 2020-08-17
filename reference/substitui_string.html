@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Tira ponto final da string — tira_ponto_da_string • vituripackage</title>
+<title>Substitui um vetor de caracteres por outro caracter — substitui_string • vituripackage</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,8 @@
 
 
 
-<meta property="og:title" content="Tira ponto final da string — tira_ponto_da_string" />
-<meta property="og:description" content="Tira ponto final da string" />
+<meta property="og:title" content="Substitui um vetor de caracteres por outro caracter — substitui_string" />
+<meta property="og:description" content="Substitui um vetor de caracteres por outro caracter" />
 
 
 
@@ -103,16 +103,16 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Tira ponto final da string</h1>
+    <h1>Substitui um vetor de caracteres por outro caracter</h1>
     
-    <div class="hidden name"><code>tira_ponto_da_string.Rd</code></div>
+    <div class="hidden name"><code>substitui_string.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Tira ponto final da string</p>
+    <p>Substitui um vetor de caracteres por outro caracter</p>
     </div>
 
-    <pre class="usage"><span class='fu'>tira_ponto_da_string</span>(<span class='no'>x</span>)</pre>
+    <pre class="usage"><span class='fu'>substitui_string</span>(<span class='no'>x</span>, <span class='no'>de</span>, <span class='kw'>para</span> <span class='kw'>=</span> <span class='st'>""</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -121,14 +121,20 @@
       <th>x</th>
       <td><p>Um vetor de caracteres</p></td>
     </tr>
+    <tr>
+      <th>de</th>
+      <td><p>Os caracteres a serem substituídos. Pode ser um vetor.</p></td>
+    </tr>
+    <tr>
+      <th>para</th>
+      <td><p>O caracter pelo qual serão trocados os valores do vetor 'de'.</p></td>
+    </tr>
     </table>
 
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
-    <p>O vetor sem pontos.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>tira_ponto_da_string</span>(<span class='st'>"texto.com.pontos"</span>)</div><div class='output co'>#&gt; [1] "textocompontos"</div></pre>
+    <pre class="examples"><div class='input'><span class='fu'>substitui_string</span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='st'>"a &lt; b &gt; c"</span>, <span class='kw'>de</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"&lt;"</span>, <span class='st'>"&gt;"</span>), <span class='kw'>para</span> <span class='kw'>=</span> <span class='st'>"!"</span>)</div><div class='output co'>#&gt; [1] "a ! b ! c"</div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

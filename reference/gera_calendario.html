@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Tira ponto final da string — tira_ponto_da_string • vituripackage</title>
+<title>Gera um calendário — gera_calendario • vituripackage</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,9 @@
 
 
 
-<meta property="og:title" content="Tira ponto final da string — tira_ponto_da_string" />
-<meta property="og:description" content="Tira ponto final da string" />
+<meta property="og:title" content="Gera um calendário — gera_calendario" />
+<meta property="og:description" content="Gera uma tabela com dias, semanas, mês e ano, para usar
+em algum left_join e assim agrupar seus dados por semana/mês/ano." />
 
 
 
@@ -103,32 +104,65 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Tira ponto final da string</h1>
+    <h1>Gera um calendário</h1>
     
-    <div class="hidden name"><code>tira_ponto_da_string.Rd</code></div>
+    <div class="hidden name"><code>gera_calendario.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Tira ponto final da string</p>
+    <p>Gera uma tabela com dias, semanas, mês e ano, para usar
+em algum left_join e assim agrupar seus dados por semana/mês/ano.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>tira_ponto_da_string</span>(<span class='no'>x</span>)</pre>
+    <pre class="usage"><span class='fu'>gera_calendario</span>(
+  <span class='kw'>data_inicial</span> <span class='kw'>=</span> <span class='st'>"2018-01-01"</span>,
+  <span class='kw'>data_final</span> <span class='kw'>=</span> <span class='fu'>today</span>(),
+  <span class='kw'>dia_em_que_comeca_a_semana</span> <span class='kw'>=</span> <span class='st'>"dom"</span>,
+  <span class='kw'>semana</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>mes</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>ano</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>dia_character</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>x</th>
-      <td><p>Um vetor de caracteres</p></td>
+      <th>data_inicial</th>
+      <td><p>Data inicial do calendário.</p></td>
+    </tr>
+    <tr>
+      <th>data_final</th>
+      <td><p>Data final do calendário.</p></td>
+    </tr>
+    <tr>
+      <th>dia_em_que_comeca_a_semana</th>
+      <td><p>Iniciais do dia da semana em que
+a semana começa no calendário. Valores possívels:
+'seg', 'ter', 'qua', 'qui', 'sex', 'sáb', 'dom'.</p></td>
+    </tr>
+    <tr>
+      <th>semana</th>
+      <td><p>Se TRUE, o calendário terá coluna 'Semana'.</p></td>
+    </tr>
+    <tr>
+      <th>mes</th>
+      <td><p>Se TRUE, o calendário terá coluna 'Mês'.</p></td>
+    </tr>
+    <tr>
+      <th>ano</th>
+      <td><p>Se TRUE, o calendário terá coluna 'Ano'.</p></td>
+    </tr>
+    <tr>
+      <th>dia_character</th>
+      <td><p>Se TRUE, a coluna 'Dia' vem como character.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>O vetor sem pontos.</p>
+    <p>Um dataframe.</p>
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>tira_ponto_da_string</span>(<span class='st'>"texto.com.pontos"</span>)</div><div class='output co'>#&gt; [1] "textocompontos"</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Tira ponto final da string — tira_ponto_da_string • vituripackage</title>
+<title>Zipa arquivos. — zipa_arquivos • vituripackage</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,8 @@
 
 
 
-<meta property="og:title" content="Tira ponto final da string — tira_ponto_da_string" />
-<meta property="og:description" content="Tira ponto final da string" />
+<meta property="og:title" content="Zipa arquivos. — zipa_arquivos" />
+<meta property="og:description" content="Cria uma pasta zipada com arquivos selecionados." />
 
 
 
@@ -103,32 +103,39 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Tira ponto final da string</h1>
+    <h1>Zipa arquivos.</h1>
     
-    <div class="hidden name"><code>tira_ponto_da_string.Rd</code></div>
+    <div class="hidden name"><code>zipa_arquivos.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Tira ponto final da string</p>
+    <p>Cria uma pasta zipada com arquivos selecionados.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>tira_ponto_da_string</span>(<span class='no'>x</span>)</pre>
+    <pre class="usage"><span class='fu'>zipa_arquivos</span>(<span class='no'>nome_pasta_zipada</span>, <span class='no'>arquivos</span>, <span class='kw'>nivel_de_compressao</span> <span class='kw'>=</span> <span class='fl'>9</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>x</th>
-      <td><p>Um vetor de caracteres</p></td>
+      <th>nome_pasta_zipada</th>
+      <td><p>Nome da pasta zipada.</p></td>
+    </tr>
+    <tr>
+      <th>arquivos</th>
+      <td><p>Arquivos para zipar.</p></td>
+    </tr>
+    <tr>
+      <th>nivel_de_compressao</th>
+      <td><p>Inteiro de 1 a 9: quanto maior, mais comprimido
+porém leva mais tempo.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>O vetor sem pontos.</p>
+    <p>Um arquivo .zip no local especificado.</p>
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>tira_ponto_da_string</span>(<span class='st'>"texto.com.pontos"</span>)</div><div class='output co'>#&gt; [1] "textocompontos"</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

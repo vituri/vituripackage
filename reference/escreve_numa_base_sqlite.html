@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Tira ponto final da string — tira_ponto_da_string • vituripackage</title>
+<title>Escreve dados no SQLite. — escreve_numa_base_sqlite • vituripackage</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,8 @@
 
 
 
-<meta property="og:title" content="Tira ponto final da string — tira_ponto_da_string" />
-<meta property="og:description" content="Tira ponto final da string" />
+<meta property="og:title" content="Escreve dados no SQLite. — escreve_numa_base_sqlite" />
+<meta property="og:description" content="Cria ou adiciona dados a uma tabela do SQLite" />
 
 
 
@@ -103,32 +103,54 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Tira ponto final da string</h1>
+    <h1>Escreve dados no SQLite.</h1>
     
-    <div class="hidden name"><code>tira_ponto_da_string.Rd</code></div>
+    <div class="hidden name"><code>escreve_numa_base_sqlite.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Tira ponto final da string</p>
+    <p>Cria ou adiciona dados a uma tabela do SQLite</p>
     </div>
 
-    <pre class="usage"><span class='fu'>tira_ponto_da_string</span>(<span class='no'>x</span>)</pre>
+    <pre class="usage"><span class='fu'>escreve_numa_base_sqlite</span>(
+  <span class='no'>dados_a_serem_salvos</span>,
+  <span class='no'>local_database</span>,
+  <span class='no'>nome_tabela</span>,
+  <span class='kw'>append</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>overwrite</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>x</th>
-      <td><p>Um vetor de caracteres</p></td>
+      <th>dados_a_serem_salvos</th>
+      <td><p>A tabela a ser salva no SQLite.</p></td>
+    </tr>
+    <tr>
+      <th>local_database</th>
+      <td><p>Uma string com o caminho do database.</p></td>
+    </tr>
+    <tr>
+      <th>nome_tabela</th>
+      <td><p>Nome da tabela do SQLite para acessar.</p></td>
+    </tr>
+    <tr>
+      <th>append</th>
+      <td><p>Se os dados serão adicionados ao fim da tabela do SQLite (default: TRUE)</p></td>
+    </tr>
+    <tr>
+      <th>overwrite</th>
+      <td><p>Se os dados sobrescreverão o que já existe no SQLite (default: FALSE)</p></td>
     </tr>
     </table>
 
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>O vetor sem pontos.</p>
+    <p>Use append = TRUE e overwrite = FALSE (padrão) para adicionar dados
+a uma tabela já existente. Para sobrescrevê-la por completo, use
+append = FALSE e overwrite = TRUE.</p>
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>tira_ponto_da_string</span>(<span class='st'>"texto.com.pontos"</span>)</div><div class='output co'>#&gt; [1] "textocompontos"</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

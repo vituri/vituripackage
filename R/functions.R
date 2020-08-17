@@ -109,7 +109,7 @@ set_wd_aqui = function() {
 #' Envia emails usando o Outlook
 #'
 #' @description Monte emails usando o R e envie com o Outlook, com anexos, múltiplos contatos, etc. O
-#'     email pronto será exibido e bastará apertar enviar.
+#'     email pronto será exibido e bastará apertar enviar. Só funciona usando R 3.6 (e não o 4).
 #'
 #' @param para Um vetor com emails (o que se escreve no 'para').
 #' @param cc Um vetor com emails em cópia 'cc'.
@@ -120,8 +120,10 @@ set_wd_aqui = function() {
 #' @param anexos Um vetor com o endereço dos anexos (o caminho pode estar relativo ao seu working directory).
 #' @param exibir_email Se TRUE (padrão), exibe o email montado no Outlook (e voce envia apos checar).
 #' @param enviar_email Se TRUE (o padrão é FALSE), envia o email logo após montar.
-#' @details Caso dê um erro do tipo 'não foi possível encontrar o pacote RDCOMClient', use o comando instala_rdcomclient()
-#'   É recomendado abrir o Outlook antes de usar essa função, pois senão o email vai pra caixa de saída (e não é enviado).
+#' @details O pacote RDCOMclient é meio chato de instalar. Se ao usar essa função
+#' ele der erro de instalação, provavelmente terá que apagar um arquivo chamado
+#' LOCK-não-sei-o-que (conforme escrito no erro que der) e tentar usar a função de novo. É preciso
+#' instalar o Rtools35.
 #'
 #' @export
 

@@ -37,9 +37,11 @@ email_outlook(
 }
 \description{
 Monte emails usando o R e envie com o Outlook, com anexos, múltiplos contatos, etc. O
-    email pronto será exibido e bastará apertar enviar.
+    email pronto será exibido e bastará apertar enviar. Só funciona usando R 3.6 (e não o 4).
 }
 \details{
-Caso dê um erro do tipo 'não foi possível encontrar o pacote RDCOMClient', use o comando instala_rdcomclient()
-  É recomendado abrir o Outlook antes de usar essa função, pois senão o email vai pra caixa de saída (e não é enviado).
+O pacote RDCOMclient é meio chato de instalar. Se ao usar essa função
+ele der erro de instalação, provavelmente terá que apagar um arquivo chamado
+LOCK-não-sei-o-que (conforme escrito no erro que der) e tentar usar a função de novo. É preciso
+instalar o Rtools35.
 }

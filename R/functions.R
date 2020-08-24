@@ -242,7 +242,7 @@ escreve_numa_base_sqlite = function(dados_a_serem_salvos, local_database,
 
   DBI::dbWriteTable(conn = con, name = nome_tabela,
                     value = dados_a_serem_salvos,
-                    append = FALSE, overwrite = TRUE)
+                    append = append, overwrite = overwrite)
 
 }
 

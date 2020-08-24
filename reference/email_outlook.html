@@ -41,7 +41,7 @@
 
 <meta property="og:title" content="Envia emails usando o Outlook — email_outlook" />
 <meta property="og:description" content="Monte emails usando o R e envie com o Outlook, com anexos, múltiplos contatos, etc. O
-    email pronto será exibido e bastará apertar enviar." />
+    email pronto será exibido e bastará apertar enviar. Só funciona usando R 3.6 (e não o 4)." />
 
 
 
@@ -111,7 +111,7 @@
 
     <div class="ref-description">
     <p>Monte emails usando o R e envie com o Outlook, com anexos, múltiplos contatos, etc. O
-    email pronto será exibido e bastará apertar enviar.</p>
+    email pronto será exibido e bastará apertar enviar. Só funciona usando R 3.6 (e não o 4).</p>
     </div>
 
     <pre class="usage"><span class='fu'>email_outlook</span>(
@@ -169,8 +169,10 @@
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Caso dê um erro do tipo 'não foi possível encontrar o pacote RDCOMClient', use o comando instala_rdcomclient()
-  É recomendado abrir o Outlook antes de usar essa função, pois senão o email vai pra caixa de saída (e não é enviado).</p>
+    <p>O pacote RDCOMclient é meio chato de instalar. Se ao usar essa função
+ele der erro de instalação, provavelmente terá que apagar um arquivo chamado
+LOCK-não-sei-o-que (conforme escrito no erro que der) e tentar usar a função de novo. É preciso
+instalar o Rtools35.</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

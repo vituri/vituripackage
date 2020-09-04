@@ -272,9 +272,12 @@ gera_calendario =
            semana = TRUE,
            mes = TRUE,
            ano = TRUE,
+           dia_semana = FALSE,
            dia_character = FALSE) {
 
     data_inicial %<>% as_date()
+
+    data_final %<>% as_date()
 
     temp = seq.Date(from = data_inicial - days(6),
                     to = data_inicial, by = 1)
@@ -294,6 +297,10 @@ gera_calendario =
 
     for (i in seq(1, n, by = 7)) {
       calendario$Semana[i:(i+6)] = calendario$Dia[i]
+    }
+
+    if (dia_semana == TRUE) {
+      calendario$Dia_Semana = weekdays(calendario$Dia, abbreviate = TRUE)
     }
 
     if (semana == FALSE) {
@@ -336,6 +343,39 @@ zipa_arquivos = function(nome_pasta_zipada, arquivos, nivel_de_compressao = 9) {
 
   zipr(zipfile = nome_pasta_zipada, files = arquivos, compression_level = nivel_de_compressao)
 
+}
 
+#' Escreve (dá append) numa base MariaDB
+#'
+#' @param conexao A conexão com o database.
+#' @param nome_tabela Nome da tabela no database onde os dados serão salvos.
+#' @param dados_a_serem_salvos A tabela com os dados a serem salvos no DB.
+#' @param overwrite Se TRUE (padrão é FALSE), sobrescreve a tabela.
+#' @param append Se TRUE (padrão), adiciona os dados ao fim da tabela existente, sem apagar nada.
+#'
+#' @export
 
+escreve_numa_base_mariadb = function(conexao, nome_tabela, dados_a_serem_salvos,
+                                     overwrite = FALSE, append = TRUE) {
+  f = tempfile()
+  dbFields = dbListFields(conexao, nome_tabela)
+
+  if (append == TRUE) {
+
+    for (dbField in dbFields) {
+      # if a field in db is not present on dados_a_serem_salvos to import
+      if (!(dbField %in% colnames(dados_a_serem_salvos))) {
+        # add with null!
+        dados_a_serem_salvos[[dbField]] = NA
+      }
+    }
+
+  }
+
+  dados_a_serem_salvos = dados_a_serem_salvos %>% select(dbFields)
+
+  write.csv(dados_a_serem_salvos, file = f, row.names=F, na = "NULL", fileEncoding = "UTF-8")
+  dbWriteTable(conexao, nome_tabela, f, append = append, overwrite = overwrite, eol = "\r\n")
+
+  unlink(f)
 }

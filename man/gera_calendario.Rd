@@ -11,6 +11,7 @@ gera_calendario(
   semana = TRUE,
   mes = TRUE,
   ano = TRUE,
+  dia_semana = FALSE,
   dia_character = FALSE
 )
 }

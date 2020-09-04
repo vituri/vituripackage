@@ -3,6 +3,7 @@
 export(abre_arquivo)
 export(conecta_base_sqlite)
 export(email_outlook)
+export(escreve_numa_base_mariadb)
 export(escreve_numa_base_sqlite)
 export(gera_calendario)
 export(set_wd_aqui)

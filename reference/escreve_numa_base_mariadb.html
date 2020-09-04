@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Gera um calendário — gera_calendario • vituripackage</title>
+<title>Escreve (dá append) numa base MariaDB — escreve_numa_base_mariadb • vituripackage</title>
 
 
 <!-- jquery -->
@@ -39,9 +39,8 @@
 
 
 
-<meta property="og:title" content="Gera um calendário — gera_calendario" />
-<meta property="og:description" content="Gera uma tabela com dias, semanas, mês e ano, para usar
-em algum left_join e assim agrupar seus dados por semana/mês/ano." />
+<meta property="og:title" content="Escreve (dá append) numa base MariaDB — escreve_numa_base_mariadb" />
+<meta property="og:description" content="Escreve (dá append) numa base MariaDB" />
 
 
 
@@ -104,65 +103,48 @@ em algum left_join e assim agrupar seus dados por semana/mês/ano." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Gera um calendário</h1>
+    <h1>Escreve (dá append) numa base MariaDB</h1>
     
-    <div class="hidden name"><code>gera_calendario.Rd</code></div>
+    <div class="hidden name"><code>escreve_numa_base_mariadb.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Gera uma tabela com dias, semanas, mês e ano, para usar
-em algum left_join e assim agrupar seus dados por semana/mês/ano.</p>
+    <p>Escreve (dá append) numa base MariaDB</p>
     </div>
 
-    <pre class="usage"><span class='fu'>gera_calendario</span>(
-  <span class='kw'>data_inicial</span> <span class='kw'>=</span> <span class='st'>"2018-01-01"</span>,
-  <span class='kw'>data_final</span> <span class='kw'>=</span> <span class='fu'>today</span>(),
-  <span class='kw'>dia_em_que_comeca_a_semana</span> <span class='kw'>=</span> <span class='st'>"dom"</span>,
-  <span class='kw'>semana</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>mes</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>ano</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>dia_semana</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>dia_character</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
+    <pre class="usage"><span class='fu'>escreve_numa_base_mariadb</span>(
+  <span class='no'>conexao</span>,
+  <span class='no'>nome_tabela</span>,
+  <span class='no'>dados_a_serem_salvos</span>,
+  <span class='kw'>overwrite</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>append</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>data_inicial</th>
-      <td><p>Data inicial do calendário.</p></td>
+      <th>conexao</th>
+      <td><p>A conexão com o database.</p></td>
     </tr>
     <tr>
-      <th>data_final</th>
-      <td><p>Data final do calendário.</p></td>
+      <th>nome_tabela</th>
+      <td><p>Nome da tabela no database onde os dados serão salvos.</p></td>
     </tr>
     <tr>
-      <th>dia_em_que_comeca_a_semana</th>
-      <td><p>Iniciais do dia da semana em que
-a semana começa no calendário. Valores possívels:
-'seg', 'ter', 'qua', 'qui', 'sex', 'sáb', 'dom'.</p></td>
+      <th>dados_a_serem_salvos</th>
+      <td><p>A tabela com os dados a serem salvos no DB.</p></td>
     </tr>
     <tr>
-      <th>semana</th>
-      <td><p>Se TRUE, o calendário terá coluna 'Semana'.</p></td>
+      <th>overwrite</th>
+      <td><p>Se TRUE (padrão é FALSE), sobrescreve a tabela.</p></td>
     </tr>
     <tr>
-      <th>mes</th>
-      <td><p>Se TRUE, o calendário terá coluna 'Mês'.</p></td>
-    </tr>
-    <tr>
-      <th>ano</th>
-      <td><p>Se TRUE, o calendário terá coluna 'Ano'.</p></td>
-    </tr>
-    <tr>
-      <th>dia_character</th>
-      <td><p>Se TRUE, a coluna 'Dia' vem como character.</p></td>
+      <th>append</th>
+      <td><p>Se TRUE (padrão), adiciona os dados ao fim da tabela existente, sem apagar nada.</p></td>
     </tr>
     </table>
 
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
-    <p>Um dataframe.</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

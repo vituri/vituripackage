@@ -386,6 +386,8 @@ escreve_numa_base_mariadb = function(conexao, nome_tabela, dados_a_serem_salvos,
 #' @param data_a_considerar Data a partir da qual procurar uma semana pra trás.
 #' @param dia_da_semana Abreviado. Valores: seg, ter, qua, qui, sex, sáb, dom.
 #'
+#' @return Um objeto date com a data mais recente que cai no dia da semana selecionado.
+#'
 #' @export
 
 dia_recente_da_semana = function(data_a_considerar = lubridate::today(), dia_da_semana = "seg") {

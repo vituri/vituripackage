@@ -14,6 +14,9 @@ dia_recente_da_semana(
 
 \item{dia_da_semana}{Abreviado. Valores: seg, ter, qua, qui, sex, sáb, dom.}
 }
+\value{
+Um objeto date com a data mais recente que cai no dia da semana selecionado.
+}
 \description{
 Procura a data mais recente em que ocorreu um dia da semana.
 }

@@ -1,0 +1,29 @@
+Package: vituripackage
+Type: Package
+Title: Pacote misterioso......................
+Version: 0.1.1
+Author: G. Vituri <viturivituri@gmail.com>
+Maintainer: G. Vituri <viturivituri@gmail.com>
+Description: Funções pra mexer no Excel, manipular
+    strings, plotar no echarts, mandar emails, escrever no SQLite, etc.
+License: Ta liberado
+Encoding: UTF-8
+LazyData: true
+Imports: 
+    tidyverse,
+    echarts4r,
+    DT,
+    lubridate,
+    openxlsx,
+    svDialogs,
+    magrittr,
+    DBI,
+    RSQLite
+Depends:
+    dplyr,
+    lubridate,
+    openxlsx,
+    magrittr,
+    echarts4r,
+    svDialogs
+RoxygenNote: 7.1.1

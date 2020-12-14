@@ -1,0 +1,6 @@
+stopifnot(exprs = {
+  all.equal(pi, 3.1415927)
+  2 < 2
+  all(1:10 < 12)
+  "a" < "b"
+})

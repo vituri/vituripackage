@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Define o working directory como sendo a pasta onde se encontra salvo o script. — set_wd_aqui • vituripackage</title>
+<title>Procura a data mais recente em que ocorreu um dia da semana. — dia_recente_da_semana • vituripackage</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,8 @@
 
 
 
-<meta property="og:title" content="Define o working directory como sendo a pasta onde se encontra salvo o script. — set_wd_aqui" />
-<meta property="og:description" content="Define o working directory como sendo a pasta onde se encontra salvo o script." />
+<meta property="og:title" content="Procura a data mais recente em que ocorreu um dia da semana. — dia_recente_da_semana" />
+<meta property="og:description" content="Procura a data mais recente em que ocorreu um dia da semana." />
 
 
 
@@ -103,21 +103,33 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Define o working directory como sendo a pasta onde se encontra salvo o script.</h1>
+    <h1>Procura a data mais recente em que ocorreu um dia da semana.</h1>
     
-    <div class="hidden name"><code>set_wd_aqui.Rd</code></div>
+    <div class="hidden name"><code>dia_recente_da_semana.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Define o working directory como sendo a pasta onde se encontra salvo o script.</p>
+    <p>Procura a data mais recente em que ocorreu um dia da semana.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>set_wd_aqui</span><span class='op'>(</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>dia_recente_da_semana</span><span class='op'>(</span>
+  data_a_considerar <span class='op'>=</span> <span class='fu'>lubridate</span><span class='fu'>::</span><span class='fu'><a href='http://lubridate.tidyverse.org/reference/now.html'>today</a></span><span class='op'>(</span><span class='op'>)</span>,
+  dia_da_semana <span class='op'>=</span> <span class='st'>"seg"</span>
+<span class='op'>)</span></pre>
 
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>data_a_considerar</th>
+      <td><p>Data a partir da qual procurar uma semana pra trás.</p></td>
+    </tr>
+    <tr>
+      <th>dia_da_semana</th>
+      <td><p>Abreviado. Valores: seg, ter, qua, qui, sex, sáb, dom.</p></td>
+    </tr>
+    </table>
 
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
-    <p>Muda o wd.</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

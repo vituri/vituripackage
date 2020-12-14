@@ -1,7 +1,7 @@
 Package: vituripackage
 Type: Package
 Title: Pacote misterioso......................
-Version: 0.1.0
+Version: 0.1.1
 Author: G. Vituri <viturivituri@gmail.com>
 Maintainer: G. Vituri <viturivituri@gmail.com>
 Description: Funções pra mexer no Excel, manipular
@@ -20,7 +20,7 @@ Imports:
     DBI,
     RSQLite
 Depends:
-    tidyverse,
+    dplyr,
     lubridate,
     openxlsx,
     magrittr,

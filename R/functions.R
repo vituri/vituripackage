@@ -357,8 +357,11 @@ zipa_arquivos = function(nome_pasta_zipada, arquivos, nivel_de_compressao = 9) {
 
 escreve_numa_base_mariadb = function(conexao, nome_tabela, dados_a_serem_salvos,
                                      overwrite = FALSE, append = TRUE) {
+
+  require(DBI); require(RMariaDB)
+
   f = tempfile()
-  dbFields = DBI::dbListFields(conexao, nome_tabela)
+  dbFields = dbListFields(conexao, nome_tabela)
 
   if (append == TRUE) {
 

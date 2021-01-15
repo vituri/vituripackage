@@ -434,9 +434,11 @@ le_tratativa_base_antiga =
       temp = readxl::read_excel(path = arquivo, skip = 3, sheet = "B.TA")
     }
 
-    temp = temp[, 1:min(38, ncol(temp))]
+    n_col = min(38, ncol(temp))
 
-    names(temp) = nomes_colunas_tratativas
+    temp = temp[, 1:n_col]
+
+    names(temp) = nomes_colunas_tratativas[1:n_col]
 
     temp$DataHora %<>% ymd_hms()
 

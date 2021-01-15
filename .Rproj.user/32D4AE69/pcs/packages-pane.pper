@@ -1,6 +1,6 @@
 {
     "installOptions": {
-        "installFromRepository": false,
+        "installFromRepository": true,
         "libraryPath": "C:/Users/Guilherme/Documents/R/win-library/3.6",
         "installDependencies": true
     }

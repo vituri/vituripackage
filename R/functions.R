@@ -434,7 +434,7 @@ le_tratativa_base_antiga =
       temp = readxl::read_excel(path = arquivo, skip = 3, sheet = "B.TA")
     }
 
-    temp = temp[, 1:38]
+    temp = temp[, 1:min(38, ncol(temp))]
 
     names(temp) = nomes_colunas_tratativas
 
@@ -507,3 +507,5 @@ padrao_string = function(x, pattern, ignore.case = TRUE) {
 }
 
 
+
+# pacman::p_load_current_gh("vituri/vituripackage")

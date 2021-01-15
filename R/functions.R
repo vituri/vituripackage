@@ -398,6 +398,12 @@ dia_recente_da_semana = function(data_a_considerar = lubridate::today(), dia_da_
   dias_pra_tras[which(weekdays(dias_pra_tras, abbreviate = TRUE) == dia_da_semana)]
 }
 
+#' Vetor com os nomes das colunas das tratativas no modelo antigo.
+#'
+#' @return Um vetor da hora.
+#'
+#' @export
+
 nomes_colunas_tratativas = c(
   "Número", "Frota", "Placa", "Empresa", "Motorista", "Telefone", "Eventos",
   "Tipo de distração", "Tipo de alarme registrado", "Observações", "DataHora",

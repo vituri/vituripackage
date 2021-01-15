@@ -485,3 +485,19 @@ le_tratativa_base_nova =
     return(temp)
 
   }
+
+#' Checa se a string possui um certo padrão
+#'
+#' @param x String a ser testada.
+#' @param pattern Padrão pra procurar na string
+#' @param ignore.case Ignorar se é maiuscula ou minúscula (por padrão, TRUE).
+#'
+#' @return Vetor booleano.
+#'
+#' @export
+
+padrao_string = function(x, pattern, ignore.case = TRUE) {
+  grepl(x = x, pattern = pattern, ignore.case = ignore.case)
+}
+
+

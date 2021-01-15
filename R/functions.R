@@ -397,3 +397,91 @@ dia_recente_da_semana = function(data_a_considerar = lubridate::today(), dia_da_
   dias_pra_tras = data_a_considerar - lubridate::days(0:6)
   dias_pra_tras[which(weekdays(dias_pra_tras, abbreviate = TRUE) == dia_da_semana)]
 }
+
+nomes_colunas_tratativas = c(
+  "Número", "Frota", "Placa", "Empresa", "Motorista", "Telefone", "Eventos",
+  "Tipo de distração", "Tipo de alarme registrado", "Observações", "DataHora",
+  "Tempo de processamento", "Duração do processamento", "Estado de processamento",
+  "Usuario manipulador", "Método de processamento", "Descrição do processamento", "Velocidade",
+  "Endereço", "Data Hora Brasil", "Dia", "Horário", "Mês", "...24", "Id Imagem",
+  "Id Motorista", "Foto Selecionada?", "Tratado Manualmente?", "Id Cadastro Plataforma Argus",
+  "Alarme Ajustado para relatorio", "Id Video N2", "Duplicados", "Contagem Duplicados",
+  "...34", "Periodo baixado", "...36", "Longitude", "Latitude")
+
+
+#' Lê a tratativa já com os nomes uniformes
+#'
+#' @param arquivo Local do arquivo: uma string com o endereço parcial ou completo.
+#' @param pacote Decide se usa o openxlsx ou o readxl. O segundo dá pau com bad_alocc
+#' às vezes mas é mais rápido.
+#'
+#' @return data.frame chique.
+#'
+#' @export
+
+le_tratativa_base_antiga =
+  function(arquivo, pacote = "openxlsx") {
+    if (pacote == "openxlsx") {
+      temp = read.xlsx(xlsxFile = arquivo, startRow = 4, sheet = "B.TA",
+                       detectDates = TRUE, skipEmptyRows = TRUE, skipEmptyCols = TRUE)
+    } else {
+      temp = readxl::read_excel(path = arquivo, skip = 3, sheet = "B.TA")
+    }
+
+    temp = temp[, 1:38]
+
+    names(temp) = nomes_colunas_tratativas
+
+    temp$DataHora %<>% ymd_hms()
+
+    return(temp)
+
+  }
+
+#' Lê várias tratativas e arquivos de processamento da base nova
+#'
+#' @param arquivos_eventos Local dos arquivos com as planilhas de eventos.
+#' @param arquivos_processamentos Local dos arquivos com as planilhas de processamentos.
+#'
+#' @return data.frame chique.
+#'
+#' @export
+
+le_tratativa_base_nova =
+  function(arquivos_eventos, arquivos_processamentos = NULL) {
+
+    # browser()
+    temp1 =
+      arquivos_eventos %>%
+      lapply(function(arquivo) {
+        temp = readxl::read_excel(path = arquivo, skip = 3)
+      }) %>%
+      bind_rows() %>%
+      distinct()
+
+
+    if (!is.null(arquivos_processamentos)) {
+      temp2 =
+        arquivos_processamentos %>%
+        lapply(function(arquivo) {
+          # browser()
+          temp = readxl::read_excel(path = arquivo, skip = 2)
+          temp$Velocidade %<>% as.numeric()
+          names(temp)[5] = 'Organização controladora'
+          temp %<>%
+            rename(`Número de Placa` = `Número de placa de veículo`,
+                   `Tipo de Alarme` = `Tipo de alarme`)
+
+          return(temp)
+        }) %>%
+        bind_rows() %>%
+        distinct()
+
+      temp = left_join(temp1, temp2, by = c('Tipo de Alarme', 'Número de Placa', 'Hora de alarme'))
+    } else {
+      temp = temp1
+    }
+
+    return(temp)
+
+  }

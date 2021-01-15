@@ -18,12 +18,14 @@ Imports:
     svDialogs,
     magrittr,
     DBI,
-    RSQLite
+    RSQLite,
+    pacman
 Depends:
     dplyr,
     lubridate,
     openxlsx,
     magrittr,
     echarts4r,
-    svDialogs
+    svDialogs,
+    glue
 RoxygenNote: 7.1.1

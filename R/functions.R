@@ -512,10 +512,11 @@ padrao_string = function(x, pattern, ignore.case = TRUE) {
 
 #' Auto atualizador do futuro
 #'
-#' @return Retorna nada, só pega a versão mais recente do github
+#' @return Retorna nada, só pega a versão mais recente do github e carrega.
 #'
 #' @export
 
-atualiza_pacote = function() {
+carrega_pacote = function() {
   devtools::install_github("vituri/vituripackage", upgrade = 'never')
+  library(vituripackage)
 }

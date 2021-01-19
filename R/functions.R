@@ -510,6 +510,12 @@ padrao_string = function(x, pattern, ignore.case = TRUE) {
   grepl(x = x, pattern = pattern, ignore.case = ignore.case)
 }
 
+#' Auto atualizador do futuro
+#'
+#' @return Retorna nada, só pega a versão mais recente do github
+#'
+#' @export
 
-
-# pacman::p_load_current_gh("vituri/vituripackage")
+atualiza_pacote = function() {
+  devtools::install_github("vituri/vituripackage", upgrade = 'never')
+}

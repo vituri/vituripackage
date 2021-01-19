@@ -395,7 +395,9 @@ escreve_numa_base_mariadb = function(conexao, nome_tabela, dados_a_serem_salvos,
 
 dia_recente_da_semana = function(data_a_considerar = lubridate::today(), dia_da_semana = "seg") {
   dias_pra_tras = data_a_considerar - lubridate::days(0:6)
-  dias_pra_tras[which(weekdays(dias_pra_tras, abbreviate = TRUE) == dia_da_semana)]
+  dia = dias_pra_tras[which(weekdays(dias_pra_tras, abbreviate = TRUE) == dia_da_semana)]
+
+  return(dia)
 }
 
 #' Vetor com os nomes das colunas das tratativas no modelo antigo.

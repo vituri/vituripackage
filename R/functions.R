@@ -420,33 +420,114 @@ nomes_colunas_tratativas = c(
 #' Lê a tratativa já com os nomes uniformes
 #'
 #' @param arquivo Local do arquivo: uma string com o endereço parcial ou completo.
-#' @param pacote Decide se usa o openxlsx ou o readxl. O segundo dá pau com bad_alocc
-#' às vezes mas é mais rápido.
+#' @param use_openxlsx Decide se usa o openxlsx ou o readxl. O segundo dá pau com bad_alocc mas
+#' às vezes mas é mais rápido. O openxlsx às vezes fica lendo pra sempre uma desgraça de excel e
+#' só dá pra sair do R fechando pelo gerenciador de tarefas.
 #'
 #' @return data.frame chique.
 #'
 #' @export
 
-le_tratativa_base_antiga =
-  function(arquivo, pacote = "openxlsx") {
-    if (pacote == "openxlsx") {
-      temp = read.xlsx(xlsxFile = arquivo, startRow = 4, sheet = "B.TA",
-                       detectDates = TRUE, skipEmptyRows = TRUE, skipEmptyCols = TRUE)
-    } else {
-      temp = readxl::read_excel(path = arquivo, skip = 3, sheet = "B.TA")
-    }
+le_tratativa_base_antiga = function(arquivo, use_openxlsx = FALSE, data_inicio, data_final) {
 
-    n_col = min(38, ncol(temp))
+  glue('Lendo {basename(arquivo)}... {i} de {length(arquivos)} \n') %>% cat()
 
-    temp = temp[, 1:n_col]
-
-    names(temp) = nomes_colunas_tratativas[1:n_col]
-
-    temp$DataHora %<>% ymd_hms()
-
-    return(temp)
-
+  if (use_openxlsx == TRUE) {
+    temp = openxlsx::read.xlsx(xlsxFile = arquivo, startRow = 4, sheet = "B.TA",
+                               skipEmptyRows = TRUE, skipEmptyCols = FALSE)
+  } else {
+    temp = readxl::read_excel(path = arquivo, skip = 3, sheet = "B.TA", guess_max = 200000)
   }
+
+  n_col = min(38, ncol(temp))
+
+  temp = temp[, 1:n_col]
+
+  names(temp) = vituripackage::nomes_colunas_tratativas[1:n_col]
+
+  temp$DataHora = lubridate::ymd_hms(temp$DataHora)
+
+  temp %<>%
+    select(Frota, Empresa, Eventos, `Tipo de distração`, `Tipo de alarme registrado`,
+           Observações, DataHora, `Método de processamento`, `Descrição do processamento`,
+           Velocidade, Endereço, Longitude, Latitude) %>%
+    filter(DataHora >= data_inicio & DataHora <= glue('{data_final} 23:59:59'))
+
+  return(temp)
+}
+
+#' Pega a lista de tratativas e achata numa tabela só
+#'
+#' @param lista_de_tratativas Lista em que cada elemento é uma tabela.
+#'
+#' @return data.frame chique.
+#'
+#' @export
+
+junta_tratativas_numa_tabela_so = function(lista_de_tratativas) {
+  lista_de_tratativas %>%
+    purrr::keep(.p = function(x) nrow(x) > 0) %>%
+    lapply(function(tabela){
+      x =
+        tabela %>%
+        mutate(across(!starts_with("DataHora"), ~ as.character(.)))
+
+      x
+    }) %>%
+    bind_rows()
+}
+
+#' Escreve direito os eventos de uma tratativa
+#'
+#' @param tabela Tabela com os eventos esculachados.
+#'
+#' @return data.frame chiquíssimo.
+#'
+#' @export
+
+arruma_eventos_da_tratativa = function(tabela) {
+  x = tabela
+
+  x %<>%
+    mutate(Eventos = case_when(
+      Eventos %>% padrao_string('falso') ~ 'Falso Alarme',
+
+      `Descrição do processamento` %>% padrao_string('falso') ~ 'Falso Alarme',
+
+      Eventos %in% 'Sonolência' ~ case_when(
+        `Tipo de alarme registrado` %>% padrao_string('n1') ~ 'Sonolência N1',
+        `Tipo de alarme registrado` %>% padrao_string('n2') ~ 'Sonolência N2',
+        TRUE ~ Eventos
+      ),
+
+      Eventos %in% 'Distração' ~ case_when(
+        `Tipo de alarme registrado` %>% padrao_string('n1') ~ 'Olhando para baixo N1',
+        `Tipo de alarme registrado` %>% padrao_string('n2') ~ 'Olhando para baixo N2',
+
+        `Tipo de alarme registrado` %in% 'Olhar para o lado' &
+          `Tipo de distração` %in% 'Olhar para o lado' ~ 'Olhar para o lado',
+
+        `Tipo de alarme registrado` %in% 'Celular' &
+          `Tipo de distração` %in% 'Celular' ~ 'Celular',
+
+        `Tipo de alarme registrado` %in% 'Fumando' &
+          `Tipo de distração` %in% 'Fumando' ~ 'Fumando',
+        TRUE ~ Eventos
+      ),
+
+      `Tipo de alarme registrado` %>% padrao_string('bocejo') ~ 'Bocejo',
+      TRUE ~ Eventos
+    )
+    )
+
+  x %<>% arrange(date(DataHora), Empresa)
+  x$DataHora = x$DataHora %>% as.character()
+  x$Latitude %<>% as.numeric()
+  x$Longitude %<>% as.numeric()
+  x$Velocidade %<>% as.numeric() %>% round(digits = 0) %>% as.character()
+
+  return(x)
+}
 
 #' Lê várias tratativas e arquivos de processamento da base nova
 #'
@@ -519,4 +600,8 @@ padrao_string = function(x, pattern, ignore.case = TRUE) {
 carrega_pacote = function() {
   devtools::install_github("vituri/vituripackage", upgrade = 'never')
   library(vituripackage)
+}
+
+eh_erro = function(x) {
+  inherits(x, 'try-error')
 }

@@ -451,7 +451,7 @@ le_tratativa_base_antiga = function(arquivo, use_openxlsx = FALSE, data_inicio, 
     select(Frota, Empresa, Eventos, `Tipo de distração`, `Tipo de alarme registrado`,
            Observações, DataHora, `Método de processamento`, `Descrição do processamento`,
            Velocidade, Endereço, Longitude, Latitude) %>%
-    filter(DataHora >= data_inicio & DataHora <= glue('{data_final} 23:59:59'))
+    filter(DataHora >= data_inicio & DataHora < (data_final + days(1)))
 
   return(temp)
 }

@@ -524,7 +524,7 @@ arruma_eventos_da_tratativa = function(tabela) {
     )
     )
 
-  x %<>% arrange(date(DataHora), Empresa)
+  x %<>% arrange(lubridate::date(DataHora), Empresa)
   x$DataHora %<>% as.character()
   x$Latitude %<>% as.numeric()
   x$Longitude %<>% as.numeric()

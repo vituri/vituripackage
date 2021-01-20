@@ -587,7 +587,7 @@ le_tratativa_base_nova =
 #' @param pattern Padrão pra procurar na string
 #' @param ignore.case Ignorar se é maiuscula ou minúscula (por padrão, TRUE).
 #'
-#' @return Vetor booleano.
+#' @return Vetor booleano. É só uma versão mais paipeável do grepl.
 #'
 #' @export
 

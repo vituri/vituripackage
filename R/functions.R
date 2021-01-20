@@ -465,7 +465,9 @@ le_tratativa_base_antiga = function(arquivo, use_openxlsx = FALSE, data_inicio, 
 #' @export
 
 junta_tratativas_numa_tabela_so = function(lista_de_tratativas) {
-  lista_de_tratativas %>%
+  x =
+    lista_de_tratativas %>%
+    purrr::compact() %>%
     purrr::keep(.p = function(x) nrow(x) > 0) %>%
     lapply(function(tabela){
       x =
@@ -475,6 +477,8 @@ junta_tratativas_numa_tabela_so = function(lista_de_tratativas) {
       x
     }) %>%
     bind_rows()
+
+  return(x)
 }
 
 #' Escreve direito os eventos de uma tratativa
@@ -521,7 +525,7 @@ arruma_eventos_da_tratativa = function(tabela) {
     )
 
   x %<>% arrange(date(DataHora), Empresa)
-  x$DataHora = x$DataHora %>% as.character()
+  x$DataHora %<>% as.character()
   x$Latitude %<>% as.numeric()
   x$Longitude %<>% as.numeric()
   x$Velocidade %<>% as.numeric() %>% round(digits = 0) %>% as.character()

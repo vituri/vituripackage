@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Lê a tratativa já com os nomes uniformes — le_tratativa_base_antiga • vituripackage</title>
+<title>Pega a lista de tratativas e achata numa tabela só — junta_tratativas_numa_tabela_so • vituripackage</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,8 @@
 
 
 
-<meta property="og:title" content="Lê a tratativa já com os nomes uniformes — le_tratativa_base_antiga" />
-<meta property="og:description" content="Lê a tratativa já com os nomes uniformes" />
+<meta property="og:title" content="Pega a lista de tratativas e achata numa tabela só — junta_tratativas_numa_tabela_so" />
+<meta property="og:description" content="Pega a lista de tratativas e achata numa tabela só" />
 
 
 
@@ -103,34 +103,23 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Lê a tratativa já com os nomes uniformes</h1>
+    <h1>Pega a lista de tratativas e achata numa tabela só</h1>
     
-    <div class="hidden name"><code>le_tratativa_base_antiga.Rd</code></div>
+    <div class="hidden name"><code>junta_tratativas_numa_tabela_so.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Lê a tratativa já com os nomes uniformes</p>
+    <p>Pega a lista de tratativas e achata numa tabela só</p>
     </div>
 
-    <pre class="usage"><span class='fu'>le_tratativa_base_antiga</span><span class='op'>(</span>
-  <span class='va'>arquivo</span>,
-  use_openxlsx <span class='op'>=</span> <span class='cn'>FALSE</span>,
-  <span class='va'>data_inicio</span>,
-  <span class='va'>data_final</span>
-<span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>junta_tratativas_numa_tabela_so</span><span class='op'>(</span><span class='va'>lista_de_tratativas</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>arquivo</th>
-      <td><p>Local do arquivo: uma string com o endereço parcial ou completo.</p></td>
-    </tr>
-    <tr>
-      <th>use_openxlsx</th>
-      <td><p>Decide se usa o openxlsx ou o readxl. O segundo dá pau com bad_alocc mas
-às vezes mas é mais rápido. O openxlsx às vezes fica lendo pra sempre uma desgraça de excel e
-só dá pra sair do R fechando pelo gerenciador de tarefas.</p></td>
+      <th>lista_de_tratativas</th>
+      <td><p>Lista em que cada elemento é uma tabela.</p></td>
     </tr>
     </table>
 

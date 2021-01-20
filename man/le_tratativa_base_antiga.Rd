@@ -4,13 +4,19 @@
 \alias{le_tratativa_base_antiga}
 \title{Lê a tratativa já com os nomes uniformes}
 \usage{
-le_tratativa_base_antiga(arquivo, pacote = "openxlsx")
+le_tratativa_base_antiga(
+  arquivo,
+  use_openxlsx = FALSE,
+  data_inicio,
+  data_final
+)
 }
 \arguments{
 \item{arquivo}{Local do arquivo: uma string com o endereço parcial ou completo.}
 
-\item{pacote}{Decide se usa o openxlsx ou o readxl. O segundo dá pau com bad_alocc
-às vezes mas é mais rápido.}
+\item{use_openxlsx}{Decide se usa o openxlsx ou o readxl. O segundo dá pau com bad_alocc mas
+às vezes mas é mais rápido. O openxlsx às vezes fica lendo pra sempre uma desgraça de excel e
+só dá pra sair do R fechando pelo gerenciador de tarefas.}
 }
 \value{
 data.frame chique.

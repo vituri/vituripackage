@@ -606,6 +606,19 @@ carrega_pacote = function() {
   library(vituripackage)
 }
 
+#' Checa se duas strings são iguais (sem dar pau com NA)
+#'
+#' @return Vetor booleano do memo tamanho que  x
+#'
+#' @export
+
+compara_string = function(x, y) {
+  1:length(x) %>%
+    sapply(function(i) {
+      identical(x[i], y[i])
+    })
+}
+
 eh_erro = function(x) {
   inherits(x, 'try-error')
 }

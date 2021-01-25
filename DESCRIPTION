@@ -19,7 +19,10 @@ Imports:
     magrittr,
     DBI,
     RSQLite,
-    pacman
+    RMariaDB,
+    pacman,
+    jsonlite,
+    httr
 Depends:
     dplyr,
     lubridate,

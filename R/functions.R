@@ -476,7 +476,8 @@ junta_tratativas_numa_tabela_so = function(lista_de_tratativas) {
 
       x
     }) %>%
-    bind_rows()
+    bind_rows() %>%
+    distinct()
 
   return(x)
 }

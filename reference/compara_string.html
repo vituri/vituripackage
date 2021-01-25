@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Checa se a string possui um certo padrão — padrao_string • vituripackage</title>
+<title>Checa se duas strings são iguais (sem dar pau com NA) — compara_string • vituripackage</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,8 @@
 
 
 
-<meta property="og:title" content="Checa se a string possui um certo padrão — padrao_string" />
-<meta property="og:description" content="Checa se a string possui um certo padrão" />
+<meta property="og:title" content="Checa se duas strings são iguais (sem dar pau com NA) — compara_string" />
+<meta property="og:description" content="Checa se duas strings são iguais (sem dar pau com NA)" />
 
 
 
@@ -103,16 +103,16 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Checa se a string possui um certo padrão</h1>
+    <h1>Checa se duas strings são iguais (sem dar pau com NA)</h1>
     
-    <div class="hidden name"><code>padrao_string.Rd</code></div>
+    <div class="hidden name"><code>compara_string.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Checa se a string possui um certo padrão</p>
+    <p>Checa se duas strings são iguais (sem dar pau com NA)</p>
     </div>
 
-    <pre class="usage"><span class='fu'>padrao_string</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>pattern</span>, ignore.case <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>compara_string</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>y</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -122,18 +122,14 @@
       <td><p>String a ser testada.</p></td>
     </tr>
     <tr>
-      <th>pattern</th>
-      <td><p>Padrão pra procurar na string</p></td>
-    </tr>
-    <tr>
-      <th>ignore.case</th>
-      <td><p>Ignorar se é maiuscula ou minúscula (por padrão, TRUE).</p></td>
+      <th>y</th>
+      <td><p>String a ser testada, de preferência do mesmo tamanho que x.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Vetor booleano. É só uma versão mais paipeável do grepl.</p>
+    <p>Vetor booleano do memo tamanho que  x</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

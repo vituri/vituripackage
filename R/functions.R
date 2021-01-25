@@ -607,6 +607,8 @@ carrega_pacote = function() {
 }
 
 #' Checa se duas strings são iguais (sem dar pau com NA)
+#' @param x String a ser testada.
+#' @param y String a ser testada, de preferência do mesmo tamanho que x.
 #'
 #' @return Vetor booleano do memo tamanho que  x
 #'

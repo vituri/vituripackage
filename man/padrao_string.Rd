@@ -14,7 +14,7 @@ padrao_string(x, pattern, ignore.case = TRUE)
 \item{ignore.case}{Ignorar se é maiuscula ou minúscula (por padrão, TRUE).}
 }
 \value{
-Vetor booleano.
+Vetor booleano. É só uma versão mais paipeável do grepl.
 }
 \description{
 Checa se a string possui um certo padrão

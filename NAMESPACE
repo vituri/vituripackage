@@ -3,6 +3,7 @@
 export(abre_arquivo)
 export(arruma_eventos_da_tratativa)
 export(carrega_pacote)
+export(compara_string)
 export(conecta_base_sqlite)
 export(dia_recente_da_semana)
 export(email_outlook)

@@ -120,6 +120,7 @@ set_wd_aqui = function() {
 #' @param anexos Um vetor com o endereço dos anexos (o caminho pode estar relativo ao seu working directory).
 #' @param exibir_email Se TRUE (padrão), exibe o email montado no Outlook (e voce envia apos checar).
 #' @param enviar_email Se TRUE (o padrão é FALSE), envia o email logo após montar.
+#' @param usar_utf8 Se FALSE (o padrão é TRUE), converte o assunto e o texto pro formato native.
 #' @details O pacote RDCOMclient é meio chato de instalar. Se ao usar essa função
 #' ele der erro de instalação, provavelmente terá que apagar um arquivo chamado
 #' LOCK-não-sei-o-que (conforme escrito no erro que der) e tentar usar a função de novo. É preciso
@@ -129,7 +130,7 @@ set_wd_aqui = function() {
 
 email_outlook = function(para = "", cc = "", bcc = "", assunto = "",
                          texto_email = "", assinatura = "", anexos = "",
-                         exibir_email = TRUE, enviar_email = FALSE){
+                         exibir_email = TRUE, enviar_email = FALSE, usar_utf8 = TRUE){
   # carrega o pacote
   if (require(RDCOMClient) == FALSE) {
     devtools::install_github("dkyleward/RDCOMClient")
@@ -147,8 +148,17 @@ email_outlook = function(para = "", cc = "", bcc = "", assunto = "",
   Email[["to"]] = para %>% paste(collapse = "; ")
   Email[["cc"]] = cc %>% paste(collapse = "; ")
   Email[["bcc"]] = bcc %>% paste(collapse = "; ")
-  Email[["subject"]] = assunto %>% as.character() %>% enc2native()
-  Email[["HTMLBody"]] = paste0(texto_email, "<br>", assinatura)
+  if (usar_utf8 == TRUE) {
+    Email[["subject"]] = assunto %>% as.character()
+  } else {
+    Email[["subject"]] = assunto %>% as.character() %>% enc2native()
+  }
+
+  if (usar_utf8 == TRUE) {
+    Email[["HTMLBody"]] = paste0(texto_email, "<br>", assinatura)
+  } else {
+    Email[["HTMLBody"]] = paste0(texto_email, "<br>", assinatura) %>% enc2native()
+  }
 
   if (all(anexos != "")) {
 

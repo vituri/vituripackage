@@ -13,7 +13,8 @@ email_outlook(
   assinatura = "",
   anexos = "",
   exibir_email = TRUE,
-  enviar_email = FALSE
+  enviar_email = FALSE,
+  usar_utf8 = TRUE
 )
 }
 \arguments{
@@ -34,6 +35,8 @@ email_outlook(
 \item{exibir_email}{Se TRUE (padrão), exibe o email montado no Outlook (e voce envia apos checar).}
 
 \item{enviar_email}{Se TRUE (o padrão é FALSE), envia o email logo após montar.}
+
+\item{usar_utf8}{Se FALSE (o padrão é TRUE), converte o assunto e o texto pro formato native.}
 }
 \description{
 Monte emails usando o R e envie com o Outlook, com anexos, múltiplos contatos, etc. O

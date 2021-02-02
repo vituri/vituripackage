@@ -14,7 +14,8 @@ email_outlook(
   anexos = "",
   exibir_email = TRUE,
   enviar_email = FALSE,
-  usar_utf8 = TRUE
+  usar_utf8 = TRUE,
+  anexo_utf8 = TRUE
 )
 }
 \arguments{

@@ -130,7 +130,7 @@ set_wd_aqui = function() {
 
 email_outlook = function(para = "", cc = "", bcc = "", assunto = "",
                          texto_email = "", assinatura = "", anexos = "",
-                         exibir_email = TRUE, enviar_email = FALSE, usar_utf8 = TRUE){
+                         exibir_email = TRUE, enviar_email = FALSE, usar_utf8 = TRUE, anexo_utf8 = TRUE){
   # carrega o pacote
   if (require(RDCOMClient) == FALSE) {
     devtools::install_github("dkyleward/RDCOMClient")
@@ -164,8 +164,11 @@ email_outlook = function(para = "", cc = "", bcc = "", assunto = "",
 
     arquivos =
       anexos %>%
-      normalizePath() %>%
-      enc2native()
+      normalizePath()
+
+    if (anexo_utf8 == FALSE) {
+      arquivos %<>% enc2native()
+    }
 
     for (i in 1:length(arquivos)) {
       Email[["Attachments"]]$Add(arquivos[i])

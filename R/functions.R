@@ -134,9 +134,9 @@ email_outlook = function(para = "", cc = "", bcc = "", assunto = "",
   # carrega o pacote
   if (require(RDCOMClient) == FALSE) {
     devtools::install_github("dkyleward/RDCOMClient")
-  } else {
-    require(RDCOMClient)
   }
+
+  require(RDCOMClient)
 
   # Open Outlook
   Outlook <- COMCreate("Outlook.Application")

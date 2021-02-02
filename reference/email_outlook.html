@@ -123,7 +123,8 @@
   assinatura <span class='op'>=</span> <span class='st'>""</span>,
   anexos <span class='op'>=</span> <span class='st'>""</span>,
   exibir_email <span class='op'>=</span> <span class='cn'>TRUE</span>,
-  enviar_email <span class='op'>=</span> <span class='cn'>FALSE</span>
+  enviar_email <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  usar_utf8 <span class='op'>=</span> <span class='cn'>TRUE</span>
 <span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -164,6 +165,10 @@
     <tr>
       <th>enviar_email</th>
       <td><p>Se TRUE (o padrão é FALSE), envia o email logo após montar.</p></td>
+    </tr>
+    <tr>
+      <th>usar_utf8</th>
+      <td><p>Se FALSE (o padrão é TRUE), converte o assunto e o texto pro formato native.</p></td>
     </tr>
     </table>
 

@@ -635,6 +635,97 @@ compara_string = function(x, y) {
     })
 }
 
+#' Checa se o try é um erro
+#' @param x Objeto a ser testado
+#'
+#' @return TRUE se for erro, FALSE se não for.
+#'
+#' @export
+
 eh_erro = function(x) {
   inherits(x, 'try-error')
 }
+
+#' Pega eventos da base de tratativas do mariadb e sobe pra base de Analytics correspondente
+#' @param conexao_db_original Conexão com o db original de Analytics
+#' @param conexao_db_tratativas Conexão com o db de tratativas
+#' @param db_selecionado Nome do db selecionado (pra saber quais operações da tratativa
+#' ele tem que pegar)
+#' @param data_inicial Se NULL, usa '2018-01-01'
+#' @param data_final Se NULL, usa o dia de ontem
+#'
+#' @return Retorna nada fi
+#'
+#' @export
+
+consolida_base_tratativa_mariadb_nova = function(
+  conexao_db_original, conexao_db_tratativas,
+  db_selecionado, data_inicial = NULL, data_final = NULL) {
+
+  require(vituripackage)
+
+  if (is.null(data_inicial)) {
+    data_inicial = '2018-01-01'
+  }
+
+  if (is.null(data_final)) {
+    data_final = today(tzone = 'Brazil/East') - days(1)
+  }
+
+  data_inicial %<>% as.character()
+
+  data_final = data_final + days(1)
+  data_final %<>% as.character()
+
+  fx.controle =
+    tbl(conexao_db_tratativas, 'Controle') %>%
+    rename(Empresa_chique = Empresa,
+           Empresa = Operação) %>%
+    select(Empresa_chique, Empresa)
+
+  controle =
+    fx.controle %>%
+    collect()
+
+  empresa_selecionada =
+    controle %>%
+    filter(Empresa_chique %>% padrao_string(db_selecionado)) %>%
+    pull(Empresa_chique) %>%
+    unique()
+
+  dados =
+    tbl(conexao_db_tratativas, 'Eventos') %>%
+    left_join(fx.controle) %>%
+    filter(Empresa_chique %in% empresa_selecionada &
+             `Horário registro` >= data_inicial &
+             `Horário registro` < data_final) %>%
+    collect() %>%
+    select(-Empresa_chique)
+
+  dados$`Horário de processamento` %<>% as.character()
+  dados$`Horário registro` %<>% as.character()
+
+  dados %<>%
+    rename(DataHora = `Horário registro`,
+           `Tipo de alarme registrado` = `Alarme registrado`)
+
+  dados %<>%
+    filter(!Eventos %in% 'Confirmação download')
+
+  # con2 = argusinterno::conexao_mariadb(db_selecionado)
+
+  glue('Baixando de {c(data_inicial, data_final) %>% unique() %>% paste(collapse = " a ")}') %>%
+    cat()
+
+  if (nrow(dados) > 0) {
+    dados %>%
+      escreve_numa_base_mariadb(conexao = conexao_db_original,
+                                nome_tabela = 'Eventos', dados_a_serem_salvos = .)
+    'Dados salvos!' %>% cat()
+  } else {
+    'Nenhum dado para salvar!' %>% cat()
+  }
+
+  return()
+}
+

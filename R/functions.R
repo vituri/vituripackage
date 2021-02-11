@@ -754,12 +754,11 @@ gera_num_eventos_frota = function(con, data_para_mexer = '2018-01-01') {
     dbplyr::sql_render()
 
 
-  DBI::dbSendQuery(conn = con,
+  DBI::dbSendStatement(conn = con,
                    statement = glue(
                      "DELETE FROM num_eventos_frota WHERE Dia >= '{data_pra_mexer}' ")
   )
 
-  dbSendQuery(con, glue('INSERT INTO num_eventos_frota ({num_eventos_frota})'))
+  DBI::dbSendStatement(con, glue('INSERT INTO num_eventos_frota ({num_eventos_frota})'))
 }
-
 

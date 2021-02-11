@@ -729,3 +729,37 @@ consolida_base_tratativa_mariadb_nova = function(
   return()
 }
 
+#' Gera o num_eventos_frota do período correspondente em diante
+#' @param con Conexão com o database
+#' @param data_para_mexer Data a partir da qual fazer a resumida
+#'
+#' @return Nadinha
+#'
+#' @export
+
+gera_num_eventos_frota = function(con, data_para_mexer = '2018-01-01') {
+
+  # cria evento por frota?
+  num_eventos_frota =
+    tbl(con, "Eventos") %>%
+    filter(DataHora >= data_pra_mexer) %>%
+    mutate(Dia = DATE(DataHora)) %>%
+    select(Empresa, Frota, all_of(argusinterno::coluna_eventos), Dia) %>%
+    group_by(Empresa, Frota, Dia) %>%
+    summarise_all(list(sum), na.rm = TRUE) %>%
+    ungroup() %>%
+    arrange(Dia, Empresa, Frota) %>%
+    mutate(id = 0) %>%
+    # collect()
+    dbplyr::sql_render()
+
+
+  DBI::dbSendQuery(conn = con,
+                   statement = glue(
+                     "DELETE FROM num_eventos_frota WHERE Dia >= '{data_pra_mexer}' ")
+  )
+
+  dbSendQuery(con, glue('INSERT INTO num_eventos_frota ({num_eventos_frota})'))
+}
+
+

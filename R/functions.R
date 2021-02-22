@@ -729,6 +729,18 @@ consolida_base_tratativa_mariadb_nova = function(
   return()
 }
 
+#' Transforma um vetor de string em um texto formatado pro sql
+#' @param x Vetor de strings
+#' @param data_para_mexer Data a partir da qual fazer a resumida
+#'
+#' @return Um vetor de tamanho 1
+#'
+#' @export
+
+formata_string_sql = function(x) {
+  paste0("('", x %>% paste0(collapse = "','"), "')")
+}
+
 #' Gera o num_eventos_frota do período correspondente em diante
 #' @param con Conexão com o database
 #' @param data_para_mexer Data a partir da qual fazer a resumida
@@ -739,26 +751,15 @@ consolida_base_tratativa_mariadb_nova = function(
 
 gera_num_eventos_frota = function(con, data_para_mexer = '2018-01-01') {
 
-  # cria evento por frota?
-  num_eventos_frota =
-    tbl(con, "Eventos") %>%
-    filter(DataHora >= data_pra_mexer) %>%
-    mutate(Dia = DATE(DataHora)) %>%
-    select(Empresa, Frota, all_of(argusinterno::coluna_eventos), Dia) %>%
-    group_by(Empresa, Frota, Dia) %>%
-    summarise_all(list(sum), na.rm = TRUE) %>%
-    ungroup() %>%
-    arrange(Dia, Empresa, Frota) %>%
-    mutate(id = 0) %>%
-    # collect()
-    dbplyr::sql_render()
+  texto = glue("REPLACE LOW_PRIORITY
+  INTO num_eventos_frota (`Empresa`, `Frota`, `Dia`, `Bocejo`, `Sonolência N1`, `Sonolência N2`, `Celular`, `Fumando`, `Oclusão`, `Olhando para baixo N1`, `Olhando para baixo N2`)
+  (SELECT `Empresa`, `Frota`, `Dia`, `Bocejo`, `Sonolência N1`, `Sonolência N2`, `Celular`, `Fumando`, `Oclusão`, `Olhando para baixo N1`, `Olhando para baixo N2`
+    FROM (SELECT `Empresa`, `Frota`, `Dia`, SUM(`Bocejo`) AS `Bocejo`, SUM(`Sonolência N1`) AS `Sonolência N1`, SUM(`Sonolência N2`) AS `Sonolência N2`, SUM(`Celular`) AS `Celular`, SUM(`Fumando`) AS `Fumando`, SUM(`Oclusão`) AS `Oclusão`, SUM(`Olhando para baixo N1`) AS `Olhando para baixo N1`, SUM(`Olhando para baixo N2`) AS `Olhando para baixo N2`
+          FROM (SELECT `Empresa`, `Frota`, `Bocejo`, `Sonolência N1`, `Sonolência N2`, `Celular`, `Fumando`, `Oclusão`, `Olhando para baixo N1`, `Olhando para baixo N2`, DATE(`DataHora`) AS `Dia`
+                FROM `Eventos`
+                WHERE (`DataHora` >= '{data_para_mexer}')) `q01`
+          GROUP BY `Empresa`, `Frota`, `Dia`) `q02`)")
 
-
-  DBI::dbSendStatement(conn = con,
-                   statement = glue(
-                     "DELETE FROM num_eventos_frota WHERE Dia >= '{data_pra_mexer}' ")
-  )
-
-  DBI::dbSendStatement(con, glue('INSERT INTO num_eventos_frota ({num_eventos_frota})'))
+  DBI::dbSendStatement(con, texto)
 }
 

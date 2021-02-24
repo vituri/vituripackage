@@ -8,6 +8,7 @@ consolida_base_tratativa_mariadb_nova(
   conexao_db_original,
   conexao_db_tratativas,
   db_selecionado,
+  usar_campo_empresa = TRUE,
   data_inicial = NULL,
   data_final = NULL
 )

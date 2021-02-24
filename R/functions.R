@@ -660,9 +660,8 @@ eh_erro = function(x) {
 
 consolida_base_tratativa_mariadb_nova = function(
   conexao_db_original, conexao_db_tratativas,
-  db_selecionado, data_inicial = NULL, data_final = NULL) {
-
-  require(vituripackage)
+  db_selecionado, usar_campo_empresa = TRUE,
+  data_inicial = NULL, data_final = NULL) {
 
   if (is.null(data_inicial)) {
     data_inicial = '2018-01-01'
@@ -687,20 +686,26 @@ consolida_base_tratativa_mariadb_nova = function(
     fx.controle %>%
     collect()
 
-  empresa_selecionada =
-    controle %>%
-    filter(Empresa_chique %>% padrao_string(db_selecionado)) %>%
-    pull(Empresa_chique) %>%
-    unique()
+  if (usar_campo_empresa == TRUE) {
+    empresa_selecionada =
+      controle %>%
+      filter(Empresa_chique %>% padrao_string(db_selecionado)) %>%
+      pull(Empresa) %>%
+      unique()
+  } else {
+    empresa_selecionada =
+      controle %>%
+      filter(Empresa %>% padrao_string(db_selecionado)) %>%
+      pull(Empresa) %>%
+      unique()
+  }
 
   dados =
     tbl(conexao_db_tratativas, 'Eventos') %>%
-    left_join(fx.controle) %>%
-    filter(Empresa_chique %in% empresa_selecionada &
+    filter(Empresa %in% empresa_selecionada &
              `Horário registro` >= data_inicial &
              `Horário registro` < data_final) %>%
-    collect() %>%
-    select(-Empresa_chique)
+    collect()
 
   dados$`Horário de processamento` %<>% as.character()
   dados$`Horário registro` %<>% as.character()
@@ -763,3 +768,24 @@ gera_num_eventos_frota = function(con, data_para_mexer = '2018-01-01') {
   DBI::dbSendStatement(con, texto)
 }
 
+#' Data uma data, transforma em uma string no formato brasileiro. Tem opção de formatar pra mês/ano também.
+#' @param x Vetor de datas.
+#' @param tipo Semana ou mês. Se semana, fica dia/mês/ano. Se mês, fica mês/ano.
+#'
+#' @return Vetorzão da hora de characters.
+#'
+#' @export
+
+converte_data_para_string = function(x, tipo = 'Semana') {
+  y = x
+
+  if (tipo %in% 'Semana') {
+    y = x %>% format('%d/%m/%y')
+  }
+
+  if (tipo %in% 'Mês') {
+    y = x %>% format('%m/%y')
+  }
+
+  return(y)
+}

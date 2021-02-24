@@ -653,6 +653,8 @@ eh_erro = function(x) {
 #' ele tem que pegar)
 #' @param data_inicial Se NULL, usa '2018-01-01'
 #' @param data_final Se NULL, usa o dia de ontem
+#' @param usar_campo_empresa Se TRUE, busca o nome da empresa na planilha Controle.
+#' Se FALSE, busca pelo padrão do nome da operação.
 #'
 #' @return Retorna nada fi
 #'

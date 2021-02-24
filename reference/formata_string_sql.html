@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Pega eventos da base de tratativas do mariadb e sobe pra base de Analytics correspondente — consolida_base_tratativa_mariadb_nova • vituripackage</title>
+<title>Transforma um vetor de string em um texto formatado pro sql — formata_string_sql • vituripackage</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,8 @@
 
 
 
-<meta property="og:title" content="Pega eventos da base de tratativas do mariadb e sobe pra base de Analytics correspondente — consolida_base_tratativa_mariadb_nova" />
-<meta property="og:description" content="Pega eventos da base de tratativas do mariadb e sobe pra base de Analytics correspondente" />
+<meta property="og:title" content="Transforma um vetor de string em um texto formatado pro sql — formata_string_sql" />
+<meta property="og:description" content="Transforma um vetor de string em um texto formatado pro sql" />
 
 
 
@@ -103,53 +103,33 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Pega eventos da base de tratativas do mariadb e sobe pra base de Analytics correspondente</h1>
+    <h1>Transforma um vetor de string em um texto formatado pro sql</h1>
     
-    <div class="hidden name"><code>consolida_base_tratativa_mariadb_nova.Rd</code></div>
+    <div class="hidden name"><code>formata_string_sql.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Pega eventos da base de tratativas do mariadb e sobe pra base de Analytics correspondente</p>
+    <p>Transforma um vetor de string em um texto formatado pro sql</p>
     </div>
 
-    <pre class="usage"><span class='fu'>consolida_base_tratativa_mariadb_nova</span><span class='op'>(</span>
-  <span class='va'>conexao_db_original</span>,
-  <span class='va'>conexao_db_tratativas</span>,
-  <span class='va'>db_selecionado</span>,
-  usar_campo_empresa <span class='op'>=</span> <span class='cn'>TRUE</span>,
-  data_inicial <span class='op'>=</span> <span class='cn'>NULL</span>,
-  data_final <span class='op'>=</span> <span class='cn'>NULL</span>
-<span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>formata_string_sql</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>conexao_db_original</th>
-      <td><p>Conexão com o db original de Analytics</p></td>
+      <th>x</th>
+      <td><p>Vetor de strings</p></td>
     </tr>
     <tr>
-      <th>conexao_db_tratativas</th>
-      <td><p>Conexão com o db de tratativas</p></td>
-    </tr>
-    <tr>
-      <th>db_selecionado</th>
-      <td><p>Nome do db selecionado (pra saber quais operações da tratativa
-ele tem que pegar)</p></td>
-    </tr>
-    <tr>
-      <th>data_inicial</th>
-      <td><p>Se NULL, usa '2018-01-01'</p></td>
-    </tr>
-    <tr>
-      <th>data_final</th>
-      <td><p>Se NULL, usa o dia de ontem</p></td>
+      <th>data_para_mexer</th>
+      <td><p>Data a partir da qual fazer a resumida</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Retorna nada fi</p>
+    <p>Um vetor de tamanho 1</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

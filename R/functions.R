@@ -680,8 +680,7 @@ consolida_base_tratativa_mariadb_nova = function(
 
   fx.controle =
     tbl(conexao_db_tratativas, 'Controle') %>%
-    rename(Empresa = Operação) %>%
-    select(Nome_database, Empresa)
+    select(Nome_database, Operação)
 
   controle =
     fx.controle %>%
@@ -691,13 +690,13 @@ consolida_base_tratativa_mariadb_nova = function(
     empresa_selecionada =
       controle %>%
       filter(Nome_database %>% padrao_string(db_selecionado)) %>%
-      pull(Empresa) %>%
+      pull(Operação) %>%
       unique()
   } else {
     empresa_selecionada =
       controle %>%
-      filter(Empresa %>% padrao_string(db_selecionado)) %>%
-      pull(Empresa) %>%
+      filter(Operação %>% padrao_string(db_selecionado)) %>%
+      pull(Operação) %>%
       unique()
   }
 

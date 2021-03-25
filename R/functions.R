@@ -789,3 +789,4 @@ converte_data_para_string = function(x, tipo = 'Semana') {
 
   return(y)
 }
+#

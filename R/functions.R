@@ -653,7 +653,7 @@ eh_erro = function(x) {
 #' ele tem que pegar)
 #' @param data_inicial Se NULL, usa '2018-01-01'
 #' @param data_final Se NULL, usa o dia de ontem
-#' @param usar_campo_empresa Se TRUE, busca o nome da empresa na planilha Controle.
+#' @param usar_campo_empresa Se TRUE, busca o nome da empresa na coluna Nome_database da planilha Controle.
 #' Se FALSE, busca pelo padrão do nome da operação.
 #'
 #' @return Retorna nada fi
@@ -680,9 +680,8 @@ consolida_base_tratativa_mariadb_nova = function(
 
   fx.controle =
     tbl(conexao_db_tratativas, 'Controle') %>%
-    rename(Empresa_chique = Empresa,
-           Empresa = Operação) %>%
-    select(Empresa_chique, Empresa)
+    rename(Empresa = Operação) %>%
+    select(Nome_database, Empresa)
 
   controle =
     fx.controle %>%
@@ -691,7 +690,7 @@ consolida_base_tratativa_mariadb_nova = function(
   if (usar_campo_empresa == TRUE) {
     empresa_selecionada =
       controle %>%
-      filter(Empresa_chique %>% padrao_string(db_selecionado)) %>%
+      filter(Nome_database %>% padrao_string(db_selecionado)) %>%
       pull(Empresa) %>%
       unique()
   } else {

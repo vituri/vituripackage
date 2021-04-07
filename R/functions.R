@@ -756,7 +756,9 @@ formata_string_sql = function(x) {
 
 gera_num_eventos_frota = function(con, data_para_mexer = '2018-01-01') {
 
-  texto = glue("REPLACE LOW_PRIORITY
+  data_para_mexer %<>% as.character()
+
+  texto = glue("REPLACE
   INTO num_eventos_frota (`Empresa`, `Frota`, `Dia`, `Bocejo`, `Sonolência N1`, `Sonolência N2`, `Celular`, `Fumando`, `Oclusão`, `Olhando para baixo N1`, `Olhando para baixo N2`)
   (SELECT `Empresa`, `Frota`, `Dia`, `Bocejo`, `Sonolência N1`, `Sonolência N2`, `Celular`, `Fumando`, `Oclusão`, `Olhando para baixo N1`, `Olhando para baixo N2`
     FROM (SELECT `Empresa`, `Frota`, `Dia`, SUM(`Bocejo`) AS `Bocejo`, SUM(`Sonolência N1`) AS `Sonolência N1`, SUM(`Sonolência N2`) AS `Sonolência N2`, SUM(`Celular`) AS `Celular`, SUM(`Fumando`) AS `Fumando`, SUM(`Oclusão`) AS `Oclusão`, SUM(`Olhando para baixo N1`) AS `Olhando para baixo N1`, SUM(`Olhando para baixo N2`) AS `Olhando para baixo N2`
@@ -765,7 +767,7 @@ gera_num_eventos_frota = function(con, data_para_mexer = '2018-01-01') {
                 WHERE (`DataHora` >= '{data_para_mexer}')) `q01`
           GROUP BY `Empresa`, `Frota`, `Dia`) `q02`)")
 
-  DBI::dbSendStatement(con, texto)
+  DBI::dbExecute(con, texto)
 }
 
 #' Data uma data, transforma em uma string no formato brasileiro. Tem opção de formatar pra mês/ano também.

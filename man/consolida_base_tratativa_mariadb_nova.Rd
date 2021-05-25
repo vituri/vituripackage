@@ -21,6 +21,9 @@ consolida_base_tratativa_mariadb_nova(
 \item{db_selecionado}{Nome do db selecionado (pra saber quais operações da tratativa
 ele tem que pegar)}
 
+\item{usar_campo_empresa}{Se TRUE, busca o nome da empresa na coluna Nome_database da planilha Controle.
+Se FALSE, busca pelo padrão do nome da operação.}
+
 \item{data_inicial}{Se NULL, usa '2018-01-01'}
 
 \item{data_final}{Se NULL, usa o dia de ontem}

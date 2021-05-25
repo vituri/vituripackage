@@ -133,7 +133,11 @@ email_outlook = function(para = "", cc = "", bcc = "", assunto = "",
                          exibir_email = TRUE, enviar_email = FALSE, usar_utf8 = TRUE, anexo_utf8 = TRUE){
   # carrega o pacote
   if (require(RDCOMClient) == FALSE) {
-    devtools::install_github("dkyleward/RDCOMClient")
+    if (version$major %in% '3') {
+      devtools::install_github("dkyleward/RDCOMClient")
+    } else {
+      install.packages("RDCOMClient", repos = "http://www.omegahat.net/R")
+    }
   }
 
   require(RDCOMClient)
@@ -373,8 +377,12 @@ escreve_numa_base_mariadb = function(conexao, nome_tabela, dados_a_serem_salvos,
 
   require(DBI); require(RMariaDB)
 
+  eol = case_when(
+    Sys.info()['sysname'] %in% 'Linux' ~ '\n'
+    ,TRUE ~ '\r\n'
+  )
   f = tempfile()
-  dbFields = dbListFields(conexao, nome_tabela)
+  dbFields = DBI::dbListFields(conexao, nome_tabela)
 
   if (append == TRUE) {
 
@@ -388,10 +396,12 @@ escreve_numa_base_mariadb = function(conexao, nome_tabela, dados_a_serem_salvos,
 
   }
 
-  dados_a_serem_salvos = dados_a_serem_salvos %>% select(dbFields)
+  dados_a_serem_salvos =
+    dados_a_serem_salvos %>%
+    select(all_of(dbFields))
 
-  write.csv(dados_a_serem_salvos, file = f, row.names=F, na = "NULL", fileEncoding = "UTF-8")
-  dbWriteTable(conexao, nome_tabela, f, append = append, overwrite = overwrite, eol = "\r\n")
+  write.csv(dados_a_serem_salvos, file = f, row.names=F, na = "NULL", fileEncoding = "UTF-8", eol = eol)
+  dbWriteTable(conexao, nome_tabela, f, append = append, overwrite = overwrite, eol = eol)
 
   unlink(f)
 }

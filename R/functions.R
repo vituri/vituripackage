@@ -400,7 +400,7 @@ escreve_numa_base_mariadb = function(conexao, nome_tabela, dados_a_serem_salvos,
     dados_a_serem_salvos %>%
     select(all_of(dbFields))
 
-  write.csv(dados_a_serem_salvos, file = f, row.names=F, na = "NULL", fileEncoding = "UTF-8", eol = eol)
+  write.csv(dados_a_serem_salvos, file = f, row.names=F, na = "NULL", fileEncoding = 'latin1', eol = eol)
   dbWriteTable(conexao, nome_tabela, f, append = append, overwrite = overwrite, eol = eol)
 
   unlink(f)
@@ -851,3 +851,71 @@ escreve_tabela_sql_geral = function(.data, con, nome_tabela_db, comando = 'REPLA
   DBI::dbExecute(conn = con, statement = query)
 }
 
+#
+# datatable(
+#   data,
+#   options = list(),
+#   class = "display",
+#   callback = JS("return table;"),
+#   rownames,
+#   colnames,
+#   container,
+#   caption = NULL,
+#   filter = c("none", "bottom", "top"),
+#   escape = TRUE,
+#   style = "auto",
+#   width = NULL,
+#   height = NULL,
+#   elementId = NULL,
+#   fillContainer = getOption("DT.fillContainer", NULL),
+#   autoHideNavigation = getOption("DT.autoHideNavigation", NULL),
+#   selection = c("multiple", "single", "none"),
+#   extensions = list(),
+#   plugins = NULL,
+#   editable = FALSE
+# )
+#
+# datatable_simple = function(
+#   data,
+#   options = list(),
+#   class = "display",
+#   rownames = FALSE,
+#   colnames,
+#   container,
+#   caption = NULL,
+#   filter = c("none", "bottom", "top"),
+#   escape = TRUE,
+#   style = "auto",
+#   width = NULL,
+#   height = NULL,
+#   elementId = NULL,
+#   selection = c("multiple", "single", "none"),
+#   extensions = list(),
+#   editable = FALSE,
+#   exibe_length_input = TRUE,
+#   exibe_filtering = TRUE,
+#   exibe_paginacao = TRUE,
+#   exibe_botao = FALSE
+#
+#
+# ) {
+#
+# }
+
+#' A negação do %in%
+#' @param a Vetor
+#' @param b Vetor
+#'
+#' @return Logical
+#'
+#' @export
+
+`%notin%` = function(a, b) {
+  !a %in% b
+}
+
+waitress_infinite = function() {
+  waitress <- waiter::Waitress$new(theme = "overlay-opacity", infinite = TRUE, hide_on_render = TRUE)
+
+  return(waitress)
+}

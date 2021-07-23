@@ -30,5 +30,6 @@ Depends:
     magrittr,
     echarts4r,
     svDialogs,
-    glue
+    glue,
+    tidyr
 RoxygenNote: 7.1.1

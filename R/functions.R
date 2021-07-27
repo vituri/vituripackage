@@ -374,35 +374,30 @@ zipa_arquivos = function(nome_pasta_zipada, arquivos, nivel_de_compressao = 9) {
 
 escreve_numa_base_mariadb = function(conexao, nome_tabela, dados_a_serem_salvos,
                                      overwrite = FALSE, append = TRUE) {
+  require(DBI)
+  require(RMariaDB)
+  if (Sys.info()["sysname"] %in% "Linux") {
+    eol = "\n"
+    fileEncoding = "latin1"
+  } else {
+    eol = "\r\n"
+    fileEncoding = "UTF-8"
+  }
 
-  require(DBI); require(RMariaDB)
-
-  eol = case_when(
-    Sys.info()['sysname'] %in% 'Linux' ~ '\n'
-    ,TRUE ~ '\r\n'
-  )
   f = tempfile()
   dbFields = DBI::dbListFields(conexao, nome_tabela)
-
   if (append == TRUE) {
-
     for (dbField in dbFields) {
-      # if a field in db is not present on dados_a_serem_salvos to import
       if (!(dbField %in% colnames(dados_a_serem_salvos))) {
-        # add with null!
         dados_a_serem_salvos[[dbField]] = NA
       }
     }
-
   }
-
-  dados_a_serem_salvos =
-    dados_a_serem_salvos %>%
-    select(all_of(dbFields))
-
-  write.csv(dados_a_serem_salvos, file = f, row.names=F, na = "NULL", fileEncoding = 'latin1', eol = eol)
-  dbWriteTable(conexao, nome_tabela, f, append = append, overwrite = overwrite, eol = eol)
-
+  dados_a_serem_salvos = dados_a_serem_salvos %>% select(all_of(dbFields))
+  write.csv(dados_a_serem_salvos, file = f, row.names = F,
+            na = "NULL", fileEncoding = fileEncoding, eol = eol)
+  dbWriteTable(conexao, nome_tabela, f, append = append, overwrite = overwrite,
+               eol = eol)
   unlink(f)
 }
 

@@ -9,7 +9,8 @@ escreve_numa_base_mariadb(
   nome_tabela,
   dados_a_serem_salvos,
   overwrite = FALSE,
-  append = TRUE
+  append = TRUE,
+  encoding = NULL
 )
 }
 \arguments{
@@ -22,6 +23,10 @@ escreve_numa_base_mariadb(
 \item{overwrite}{Se TRUE (padrão é FALSE), sobrescreve a tabela.}
 
 \item{append}{Se TRUE (padrão), adiciona os dados ao fim da tabela existente, sem apagar nada.}
+
+\item{encoding}{O encoding do csv que vai ser salvo pra depois subir pro mariadb. Se nulo,
+tenta detectar sozinho de acordo com o sistema operacional. Às vezes é preciso forçar utf8
+nele pra escrever direito no Linux. Não entendi o motivo ainda.}
 }
 \description{
 Escreve (dá append) numa base MariaDB

@@ -432,7 +432,7 @@ escreve_numa_base_mariadb2 = function(conexao, nome_tabela, dados_a_serem_salvos
               na = "NULL", fileEncoding = 'UTF-8', sep = '\t', append = FALSE, eol = '\n', quote = FALSE)
 
   # normaliza o endereço do arquivo
-  arquivo = f %>% normalizePath()
+  arquivo = f %>% normalizePath(winslash = "/")
 
   colunas = colnames(tabela) %>% glue_collapse(sep = '`,`')
 

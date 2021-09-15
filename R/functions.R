@@ -369,11 +369,13 @@ zipa_arquivos = function(nome_pasta_zipada, arquivos, nivel_de_compressao = 9) {
 #' @param dados_a_serem_salvos A tabela com os dados a serem salvos no DB.
 #' @param overwrite Se TRUE (padrão é FALSE), sobrescreve a tabela.
 #' @param append Se TRUE (padrão), adiciona os dados ao fim da tabela existente, sem apagar nada.
-#'
+#' @param encoding O encoding do csv que vai ser salvo pra depois subir pro mariadb. Se nulo,
+#' tenta detectar sozinho de acordo com o sistema operacional. Às vezes é preciso forçar utf8
+#' nele pra escrever direito no Linux. Não entendi o motivo ainda.
 #' @export
 
 escreve_numa_base_mariadb = function(conexao, nome_tabela, dados_a_serem_salvos,
-                                     overwrite = FALSE, append = TRUE) {
+                                     overwrite = FALSE, append = TRUE, encoding = NULL) {
   require(DBI)
   require(RMariaDB)
   if (Sys.info()["sysname"] %in% "Linux") {
@@ -393,7 +395,11 @@ escreve_numa_base_mariadb = function(conexao, nome_tabela, dados_a_serem_salvos,
       }
     }
   }
+
   dados_a_serem_salvos = dados_a_serem_salvos %>% select(all_of(dbFields))
+
+  fileEncoding = if (is.null(encoding)) fileEncoding else encoding
+
   write.csv(dados_a_serem_salvos, file = f, row.names = F,
             na = "NULL", fileEncoding = fileEncoding, eol = eol)
   dbWriteTable(conexao, nome_tabela, f, append = append, overwrite = overwrite,

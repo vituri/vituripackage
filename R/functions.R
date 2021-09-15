@@ -407,6 +407,51 @@ escreve_numa_base_mariadb = function(conexao, nome_tabela, dados_a_serem_salvos,
   unlink(f)
 }
 
+#' Escreve (dá append) numa base MariaDB
+#'
+#' @param conexao A conexão com o database.
+#' @param nome_tabela Nome da tabela no database onde os dados serão salvos.
+#' @param dados_a_serem_salvos A tabela com os dados a serem salvos no DB.
+#' @param comando Comando para o INSERT, as opções são IGNORE ou REPLACE.
+#' @export
+#'
+escreve_numa_base_mariadb2 = function(conexao, nome_tabela, dados_a_serem_salvos, comando = 'IGNORE')
+{
+  require(DBI)
+  require(RMariaDB)
+
+  # cria o endereço do arquivo temporário
+  f = tempfile()
+
+  # seleciona só os campos que existem na tabela de destino
+  dbFields = DBI::dbListFields(conexao, nome_tabela)
+  tabela = dados_a_serem_salvos %>% select(any_of(dbFields))
+
+  # cria o arquivo temporário
+  write.table(x = tabela, file = f, row.names = FALSE, col.names = FALSE,
+              na = "NULL", fileEncoding = 'UTF-8', sep = '\t', append = FALSE, eol = '\n', quote = FALSE)
+
+  # normaliza o endereço do arquivo
+  arquivo = f %>% normalizePath()
+
+  colunas = colnames(tabela) %>% glue_collapse(sep = '`,`')
+
+  # monta a query
+  query = glue("
+LOAD DATA LOCAL INFILE '{arquivo}'
+{comando} INTO TABLE `{nome_tabela}`
+CHARACTER SET 'utf8'
+COLUMNS TERMINATED BY '\\t'
+LINES TERMINATED BY '\\n'
+(`{colunas}`)
+")
+
+  # executa a query
+  DBI::dbExecute(conn = con, statement = query)
+
+  # apaga o arquivo temporário
+  unlink(f)
+}
 
 #' Procura a data mais recente em que ocorreu um dia da semana.
 #'

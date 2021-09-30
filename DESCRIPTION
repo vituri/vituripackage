@@ -31,5 +31,6 @@ Depends:
     echarts4r,
     svDialogs,
     glue,
-    tidyr
+    tidyr,
+    tictoc
 RoxygenNote: 7.1.2

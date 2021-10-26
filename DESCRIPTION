@@ -1,7 +1,7 @@
 Package: vituripackage
 Type: Package
 Title: Pacote misterioso......................
-Version: 0.1.1
+Version: 0.1.2
 Author: G. Vituri <viturivituri@gmail.com>
 Maintainer: G. Vituri <viturivituri@gmail.com>
 Description: Funções pra mexer no Excel, manipular
@@ -29,8 +29,8 @@ Depends:
     openxlsx,
     magrittr,
     echarts4r,
-    svDialogs,
     glue,
     tidyr,
-    tictoc
+    tictoc,
+    purrr
 RoxygenNote: 7.1.2

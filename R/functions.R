@@ -1,29 +1,3 @@
-
-
-
-getCurrentFileLocation <-  function()
-{
-  this_file <- commandArgs() %>%
-    tibble::enframe(x = ., name = NULL) %>%
-    tidyr::separate(col=value, into=c("key", "value"), sep="=", fill='right') %>%
-    dplyr::filter(key == "--file") %>%
-    dplyr::pull(value)
-  if (length(this_file)==0)
-  {
-    this_file <- rstudioapi::getSourceEditorContext()$path
-  }
-  return(dirname(this_file))
-}
-
-#' Define o working directory como sendo a pasta onde se encontra salvo o script.
-#'
-#' @return Muda o wd.
-#' @export
-
-set_wd_aqui = function() {
-  setwd(getCurrentFileLocation())
-}
-
 #' Envia emails usando o Outlook
 #'
 #' @description Monte emails usando o R e envie com o Outlook, com anexos, múltiplos contatos, etc. O
@@ -242,17 +216,6 @@ dia_recente_da_semana = function(data_a_considerar = lubridate::today(), dia_da_
 }
 
 
-#' Auto atualizador do futuro
-#'
-#' @return Retorna nada, só pega a versão mais recente do github e carrega.
-#'
-#' @export
-#'
-carrega_pacote = function() {
-  devtools::install_github("vituri/vituripackage", upgrade = 'never')
-  library(vituripackage)
-}
-
 #' Checa se o try é um erro
 #' @param x Objeto a ser testado
 #'
@@ -264,57 +227,6 @@ eh_erro = function(x) {
   inherits(x, 'try-error')
 }
 
-
-#
-# datatable(
-#   data,
-#   options = list(),
-#   class = "display",
-#   callback = JS("return table;"),
-#   rownames,
-#   colnames,
-#   container,
-#   caption = NULL,
-#   filter = c("none", "bottom", "top"),
-#   escape = TRUE,
-#   style = "auto",
-#   width = NULL,
-#   height = NULL,
-#   elementId = NULL,
-#   fillContainer = getOption("DT.fillContainer", NULL),
-#   autoHideNavigation = getOption("DT.autoHideNavigation", NULL),
-#   selection = c("multiple", "single", "none"),
-#   extensions = list(),
-#   plugins = NULL,
-#   editable = FALSE
-# )
-#
-# datatable_simple = function(
-#   data,
-#   options = list(),
-#   class = "display",
-#   rownames = FALSE,
-#   colnames,
-#   container,
-#   caption = NULL,
-#   filter = c("none", "bottom", "top"),
-#   escape = TRUE,
-#   style = "auto",
-#   width = NULL,
-#   height = NULL,
-#   elementId = NULL,
-#   selection = c("multiple", "single", "none"),
-#   extensions = list(),
-#   editable = FALSE,
-#   exibe_length_input = TRUE,
-#   exibe_filtering = TRUE,
-#   exibe_paginacao = TRUE,
-#   exibe_botao = FALSE
-#
-#
-# ) {
-#
-# }
 
 #' A negação do %in%
 #' @param a Vetor

@@ -148,7 +148,7 @@ LINES TERMINATED BY '{eol}'
 ")
 
   # executa a query
-  DBI::dbExecute(conn = con, statement = query)
+  DBI::dbExecute(conn = conexao, statement = query)
 
   # apaga o arquivo temporário
   unlink(f)

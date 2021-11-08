@@ -257,3 +257,20 @@ waitress_infinite = function() {
 seq_com_fim = function(from, to, by) {
   c(seq(from = from, to = to, by = by), to) %>% unique()
 }
+
+#' Gera sequência de dias
+#' @param from De onde
+#' @param to Até onde
+#' @param by De quantos em quantos dias
+#'
+#' @return Um vetor com a sequência
+#'
+#' @export
+seq_date = function(from, to = today(tzone = 'Brazil/East'), by = 1) {
+  if (is.character(from)) from %<>% as_date()
+  if (is.character(to)) to %<>% as_date()
+
+  seq.Date(from = from, to = to, by = by)
+}
+
+

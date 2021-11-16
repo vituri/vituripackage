@@ -266,9 +266,13 @@ seq_com_fim = function(from, to, by) {
 #' @return Um vetor com a sequência
 #'
 #' @export
-seq_date = function(from, to = today(tzone = 'Brazil/East'), by = 1) {
+seq_date = function(from = today(tzone = 'Brazil/East'), to = today(tzone = 'Brazil/East'), by = 1) {
   if (is.character(from)) from %<>% as_date()
   if (is.character(to)) to %<>% as_date()
+
+  if (from > to) {
+    by = -by
+  }
 
   seq.Date(from = from, to = to, by = by)
 }

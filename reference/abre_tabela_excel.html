@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Gera sequência de dias — seq_date • vituripackage</title>
+<title>Abre uma tabela no Excel — abre_tabela_excel • vituripackage</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,8 @@
 
 
 
-<meta property="og:title" content="Gera sequência de dias — seq_date" />
-<meta property="og:description" content="Gera sequência de dias" />
+<meta property="og:title" content="Abre uma tabela no Excel — abre_tabela_excel" />
+<meta property="og:description" content="Abre arquivos no Linux e no Windows" />
 
 
 
@@ -103,41 +103,30 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Gera sequência de dias</h1>
+    <h1>Abre uma tabela no Excel</h1>
     
-    <div class="hidden name"><code>seq_date.Rd</code></div>
+    <div class="hidden name"><code>abre_tabela_excel.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Gera sequência de dias</p>
+    <p>Abre arquivos no Linux e no Windows</p>
     </div>
 
-    <pre class="usage"><span class='fu'>seq_date</span><span class='op'>(</span>
-  from <span class='op'>=</span> <span class='fu'>today</span><span class='op'>(</span>tzone <span class='op'>=</span> <span class='st'>"Brazil/East"</span><span class='op'>)</span>,
-  to <span class='op'>=</span> <span class='fu'>today</span><span class='op'>(</span>tzone <span class='op'>=</span> <span class='st'>"Brazil/East"</span><span class='op'>)</span>,
-  by <span class='op'>=</span> <span class='fl'>1</span>
-<span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>abre_tabela_excel</span><span class='op'>(</span><span class='va'>x</span>, nome_opcional <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>from</th>
-      <td><p>De onde</p></td>
+      <th>x</th>
+      <td><p>Dataframe</p></td>
     </tr>
     <tr>
-      <th>to</th>
-      <td><p>Até onde</p></td>
-    </tr>
-    <tr>
-      <th>by</th>
-      <td><p>De quantos em quantos dias</p></td>
+      <th>nome_opcional</th>
+      <td><p>Nome opctional do arquivo. Se nulo, vai como tabela.xlsx</p></td>
     </tr>
     </table>
 
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
-    <p>Um vetor com a sequência</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

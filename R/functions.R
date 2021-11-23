@@ -183,6 +183,7 @@ gera_calendario =
       calendario %<>% select(-Semana)
     }
 
+    # tá dando pau aqui com caractere
     if (mes == TRUE){
       calendario$Mês = calendario$Dia %>% format("%Y-%m-01")
     }

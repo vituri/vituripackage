@@ -256,18 +256,6 @@ eh_erro = function(x) {
 }
 
 
-#' A negação do %in%
-#' @param a Vetor
-#' @param b Vetor
-#'
-#' @return Logical
-#'
-#' @export
-
-`%notin%` = function(a, b) {
-  !a %in% b
-}
-
 waitress_infinite = function() {
   waitress <- waiter::Waitress$new(theme = "overlay-opacity", infinite = TRUE, hide_on_render = TRUE)
 

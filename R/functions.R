@@ -91,6 +91,8 @@ email_outlook = function(para = "", cc = "", bcc = "", assunto = "",
 #' @export
 
 abre_arquivo = function(arquivo){
+  sistema_operacional = Sys.info()['sysname']
+
   if (sistema_operacional == "Linux") {
     system2(command = "xdg-open", args = arquivo)
   } else {
@@ -98,6 +100,27 @@ abre_arquivo = function(arquivo){
   }
 }
 
+#' Abre uma tabela no Excel
+#'
+#' @description Abre arquivos no Linux e no Windows
+#'
+#' @param x Dataframe
+#' @param nome_opcional Nome opctional do arquivo. Se nulo, vai como tabela.xlsx
+#'
+#' @export
+abre_tabela_excel = function(x, nome_opcional = NULL) {
+
+  if (is.null(nome_opcional)) {
+    nome_opcional = 'tabela.xlsx'
+  } else {
+    nome_opcional = paste0(nome_opcional, '.xlsx')
+  }
+
+  write.xlsx(x = x, file = nome_opcional)
+
+  abre_arquivo(nome_opcional)
+
+}
 
 #' Gera um calendário
 #'

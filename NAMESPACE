@@ -2,6 +2,7 @@
 
 export("%notin%")
 export(abre_arquivo)
+export(abre_tabela_excel)
 export(arruma_eventos_da_tratativa)
 export(compara_string)
 export(conecta_base_sqlite)

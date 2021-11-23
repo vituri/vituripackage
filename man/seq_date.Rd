@@ -4,7 +4,11 @@
 \alias{seq_date}
 \title{Gera sequência de dias}
 \usage{
-seq_date(from, to = today(tzone = "Brazil/East"), by = 1)
+seq_date(
+  from = today(tzone = "Brazil/East"),
+  to = today(tzone = "Brazil/East"),
+  by = 1
+)
 }
 \arguments{
 \item{from}{De onde}

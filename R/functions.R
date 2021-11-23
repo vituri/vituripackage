@@ -190,7 +190,7 @@ gera_calendario =
 
       calendario[['Mês']] = calendario$Mes
       calendario[['Mes']] = NULL
-      }
+    }
 
     if (ano == TRUE) {
       calendario$Ano = calendario$Dia %>% year() %>% as.character()

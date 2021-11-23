@@ -164,8 +164,9 @@ gera_calendario =
 
     qtd_semanas = (dias_diferenca %/% 7) + 1
 
-    calendario = data.frame(Dia = seq.Date(from = temp[id],
-                                           to = temp[id] + days(7*qtd_semanas - 1), by = 1))
+    calendario = tibble(
+      Dia = seq.Date(from = temp[id], to = temp[id] + days(7*qtd_semanas - 1), by = 1)
+    )
 
     n = length(calendario$Dia)
 

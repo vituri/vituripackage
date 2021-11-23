@@ -186,8 +186,11 @@ gera_calendario =
 
     # tá dando pau aqui com caractere
     if (mes == TRUE){
-      calendario$Mês = calendario$Dia %>% format("%Y-%m-01")
-    }
+      calendario$Mes = calendario$Dia %>% format("%Y-%m-01")
+
+      calendario[['Mês']] = calendario$Mes
+      calendario[['Mes']] = NULL
+      }
 
     if (ano == TRUE) {
       calendario$Ano = calendario$Dia %>% year() %>% as.character()

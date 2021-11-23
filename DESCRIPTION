@@ -13,7 +13,6 @@ Imports:
     tidyverse,
     echarts4r,
     DT,
-    lubridate,
     openxlsx,
     svDialogs,
     magrittr,

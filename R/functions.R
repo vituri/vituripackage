@@ -235,9 +235,9 @@ zipa_arquivos = function(nome_pasta_zipada, arquivos, nivel_de_compressao = 9) {
 #'
 #' @export
 
-dia_recente_da_semana = function(data_a_considerar = lubridate::today(), dia_da_semana = "seg") {
+dia_recente_da_semana = function(data_a_considerar = lubridate::today(tz = 'Brazil/East'), dia_da_semana = 0) {
   dias_pra_tras = data_a_considerar - lubridate::days(0:6)
-  dia = dias_pra_tras[which(weekdays(dias_pra_tras, abbreviate = TRUE) == dia_da_semana)]
+  dia = dias_pra_tras[which(format(dias_pra_tras, '%w') == dia_da_semana)]
 
   return(dia)
 }

@@ -143,29 +143,28 @@ abre_tabela_excel = function(x, nome_opcional = NULL) {
 
 gera_calendario =
   function(data_inicial = "2018-01-01",
-           data_final = today(),
-           dia_em_que_comeca_a_semana = "dom",
+           data_final = today(tz = 'Brazil/East'),
+           dia_em_que_comeca_a_semana = 0,
            semana = TRUE,
            mes = TRUE,
            ano = TRUE,
            dia_semana = FALSE,
            dia_character = FALSE) {
 
-    data_inicial %<>% as_date()
+    data_inicial %<>% as_date(tz = 'Brazil/East')
 
-    data_final %<>% as_date()
+    data_final %<>% as_date(tz = 'Brazil/East')
 
-    temp = seq.Date(from = data_inicial - days(6),
-                    to = data_inicial, by = 1)
+    temp = seq_date(from = data_inicial - days(6), to = data_inicial)
 
-    id = which(weekdays(x = temp, abbreviate = TRUE) == dia_em_que_comeca_a_semana, useNames = FALSE)
+    id = which(strftime(temp, '%w') == dia_em_que_comeca_a_semana)
 
     dias_diferenca = (data_final - data_inicial) %>% as.numeric()
 
     qtd_semanas = (dias_diferenca %/% 7) + 1
 
     calendario = tibble(
-      Dia = seq.Date(from = temp[id], to = temp[id] + days(7*qtd_semanas - 1), by = 1)
+      Dia = seq_date(from = temp[id], to = temp[id] + days(7*qtd_semanas - 1))
     )
 
     n = length(calendario$Dia)

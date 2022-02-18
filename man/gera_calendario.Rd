@@ -6,8 +6,8 @@
 \usage{
 gera_calendario(
   data_inicial = "2018-01-01",
-  data_final = today(),
-  dia_em_que_comeca_a_semana = "dom",
+  data_final = today(tz = "Brazil/East"),
+  dia_em_que_comeca_a_semana = 0,
   semana = TRUE,
   mes = TRUE,
   ano = TRUE,

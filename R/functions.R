@@ -293,3 +293,24 @@ seq_date = function(from = today(tzone = 'Brazil/East'), to = today(tzone = 'Bra
 }
 
 
+#' Retorna amostra de vetor
+#' @description Versão mais sensata da função `sample`.``
+#' @param x O vetor de onde tirar a amostra
+#' @param size O tamanho da amostra
+#' @param replace Os valores retornam para a caixa e podem ser selecionados novamente?
+#'
+#' @return Um vetor com a sequência
+#'
+#' @export
+sample_safe = function(x = 1, size = length(x), replace = FALSE) {
+
+  if (length(x) <= 1) {
+    return (rep(x, times = size))
+  }
+
+  if (length(x) < size) {
+    replace = TRUE
+  }
+
+  sample(x = x, size = size, replace = replace)
+}

@@ -5,8 +5,8 @@
 \title{Procura a data mais recente em que ocorreu um dia da semana.}
 \usage{
 dia_recente_da_semana(
-  data_a_considerar = lubridate::today(),
-  dia_da_semana = "seg"
+  data_a_considerar = lubridate::today(tz = "Brazil/East"),
+  dia_da_semana = 0
 )
 }
 \arguments{

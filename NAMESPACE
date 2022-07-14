@@ -2,6 +2,7 @@
 
 export(abre_arquivo)
 export(abre_tabela_excel)
+export(collect_with_index)
 export(compara_string)
 export(conecta_base_sqlite)
 export(converte_data_para_string)

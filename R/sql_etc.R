@@ -121,7 +121,7 @@ escreve_numa_base_mariadb2 = function(conexao, nome_tabela, dados_a_serem_salvos
 
   # seleciona só os campos que existem na tabela de destino
   dbFields = DBI::dbListFields(conexao, nome_tabela)
-  tabela = dados_a_serem_salvos %>% select(any_of(dbFields))
+  tabela = dados_a_serem_salvos %>% dplyr::select(dplyr::any_of(dbFields))
 
   # fixa os separadores
   sep = '|!|'
@@ -136,9 +136,9 @@ escreve_numa_base_mariadb2 = function(conexao, nome_tabela, dados_a_serem_salvos
   arquivo = f %>% normalizePath(winslash = "/")
 
   # monta a query
-  colunas = colnames(tabela) %>% glue_collapse(sep = '`,`')
+  colunas = colnames(tabela) %>% glue::glue_collapse(sep = '`,`')
 
-  query = glue("
+  query = glue::glue("
 LOAD DATA LOCAL INFILE '{arquivo}'
 {comando} INTO TABLE `{nome_tabela}`
 CHARACTER SET 'utf8'
@@ -217,3 +217,67 @@ escreve_tabela_sql_geral = function(.data, con, nome_tabela_db, comando = 'REPLA
 
   DBI::dbExecute(conn = con, statement = query)
 }
+
+
+#' Dá collect numa query usando índices
+#' @param x Uma query usando o dbplyr
+#' @param table_names Um vetor com o nome das tabelas usadas na query
+#' @param index_names Um vetor com o nome dos índices a serem usados em cada tabela do vetor anterior
+#' @param print_query Se TRUE, printa a query com o índice
+#'
+#' @return O collect da query
+#'
+#' @export
+#'
+collect_with_index = function(x, table_names = NULL, index_names = NULL, print_query = FALSE) {
+  query =
+    x %>%
+    dbplyr:::remote_query() %>%
+    as.character()
+
+  con = x$src$con
+
+  if (is.null(index_names)) {
+    table = DBI::dbGetQuery(conn = con, statement = query)
+  }
+
+  if (is.null(table_names)) {
+    table_names =
+      query %>%
+      stringr::str_split(pattern = '\n') %>%
+      unlist() %>%
+      stringr::str_subset(pattern = 'FROM `') %>%
+      stringr::str_split(pattern = "`") %>%
+      map_chr(\(x) x[2])
+  }
+
+  list_tables_index = tibble(
+    tabela = table_names
+    ,index = index_names
+  )
+
+  indexed_query = query
+
+  list_tables_index %>%
+    pwalk(function(tabela, index) {
+
+      pattern = glue('\nFROM `{tabela}`\n')
+
+      if (is.na(index)) {
+        replacement = glue('\n  FROM `{tabela}` \n')
+      } else {
+        replacement = glue('\n FROM `{tabela}` USE INDEX (`{index}`) \n')
+      }
+
+      indexed_query <<-
+        indexed_query %>%
+        stringr::str_replace(pattern = pattern, replacement = replacement)
+    })
+
+  if (print_query == TRUE) {
+    print(indexed_query)
+  }
+
+  table = DBI::dbGetQuery(conn = con, statement = indexed_query)
+}
+

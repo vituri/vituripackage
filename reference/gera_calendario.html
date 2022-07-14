@@ -46,40 +46,55 @@ em algum left_join e assim agrupar seus dados por semana/mês/ano.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">gera_calendario</span><span class="op">(</span>
-  data_inicial <span class="op">=</span> <span class="st">"2018-01-01"</span>,
-  data_final <span class="op">=</span> <span class="fu">today</span><span class="op">(</span>tz <span class="op">=</span> <span class="st">"Brazil/East"</span><span class="op">)</span>,
-  dia_em_que_comeca_a_semana <span class="op">=</span> <span class="fl">0</span>,
-  semana <span class="op">=</span> <span class="cn">TRUE</span>,
-  mes <span class="op">=</span> <span class="cn">TRUE</span>,
-  ano <span class="op">=</span> <span class="cn">TRUE</span>,
-  dia_semana <span class="op">=</span> <span class="cn">FALSE</span>,
-  dia_character <span class="op">=</span> <span class="cn">FALSE</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">gera_calendario</span><span class="op">(</span></span>
+<span>  data_inicial <span class="op">=</span> <span class="st">"2018-01-01"</span>,</span>
+<span>  data_final <span class="op">=</span> <span class="fu">today</span><span class="op">(</span>tz <span class="op">=</span> <span class="st">"Brazil/East"</span><span class="op">)</span>,</span>
+<span>  dia_em_que_comeca_a_semana <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  semana <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  mes <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  ano <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  dia_semana <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  dia_character <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>data_inicial</dt>
 <dd><p>Data inicial do calendário.</p></dd>
+
+
 <dt>data_final</dt>
 <dd><p>Data final do calendário.</p></dd>
+
+
 <dt>dia_em_que_comeca_a_semana</dt>
 <dd><p>Iniciais do dia da semana em que
 a semana começa no calendário. Valores possívels:
 'seg', 'ter', 'qua', 'qui', 'sex', 'sáb', 'dom'.</p></dd>
+
+
 <dt>semana</dt>
 <dd><p>Se TRUE, o calendário terá coluna 'Semana'.</p></dd>
+
+
 <dt>mes</dt>
 <dd><p>Se TRUE, o calendário terá coluna 'Mês'.</p></dd>
+
+
 <dt>ano</dt>
 <dd><p>Se TRUE, o calendário terá coluna 'Ano'.</p></dd>
+
+
 <dt>dia_character</dt>
 <dd><p>Se TRUE, a coluna 'Dia' vem como character.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>Um dataframe.</p>
+    
+
+<p>Um dataframe.</p>
     </div>
 
   </div>
@@ -94,7 +109,7 @@ a semana começa no calendário. Valores possívels:
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
       </footer></div>

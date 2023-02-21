@@ -155,6 +155,16 @@ LINES TERMINATED BY '{eol}'
 }
 
 
+#' Escreve (dá append) numa base MariaDB
+#' @param dados_a_serem_salvos A tabela com os dados a serem salvos no DB.
+#' @param nome_tabela Nome da tabela no database onde os dados serão salvos.
+#' @param conexao A conexão com o database.
+#' @param comando Comando para o INSERT, as opções são IGNORE ou REPLACE.
+#' @export
+escreve_mariadb = function(dados_a_serem_salvos, nome_tabela, conexao, comando = 'IGNORE') {
+  escreve_numa_base_mariadb2(conexao = conexao, nome_tabela = nome_tabela, dados_a_serem_salvos = dados_a_serem_salvos, comando = comando)
+}
+
 #' Transforma um vetor de string em um texto formatado pro sql
 #' @param x Vetor de strings
 #' @param data_para_mexer Data a partir da qual fazer a resumida

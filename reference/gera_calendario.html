@@ -48,7 +48,7 @@ em algum left_join e assim agrupar seus dados por semana/mês/ano.</p>
     <div id="ref-usage">
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">gera_calendario</span><span class="op">(</span></span>
 <span>  data_inicial <span class="op">=</span> <span class="st">"2018-01-01"</span>,</span>
-<span>  data_final <span class="op">=</span> <span class="fu">today</span><span class="op">(</span>tz <span class="op">=</span> <span class="st">"Brazil/East"</span><span class="op">)</span>,</span>
+<span>  data_final <span class="op">=</span> <span class="fu">today</span><span class="op">(</span>tz <span class="op">=</span> <span class="st">"Brazil/East"</span><span class="op">)</span> <span class="op">+</span> <span class="fu">days</span><span class="op">(</span><span class="fl">8</span><span class="op">)</span>,</span>
 <span>  dia_em_que_comeca_a_semana <span class="op">=</span> <span class="fl">0</span>,</span>
 <span>  semana <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  mes <span class="op">=</span> <span class="cn">TRUE</span>,</span>

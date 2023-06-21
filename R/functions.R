@@ -314,3 +314,78 @@ sample_safe = function(x = 1, size = length(x), replace = FALSE) {
 
   sample(x = x, size = size, replace = replace)
 }
+
+#' Translate anonymous
+#'
+#' Given an injective table Original vs Anonymous, translates a vector to an anonymous vector.
+#'
+#' @param x To be translated.
+#' @param translate_table Reference table, with columns Original and Anonymous
+#' @return Translated x
+#' @export
+translate_anonymous <-
+  function(x, translate_table){
+    y = tibble(Original = x %>% as.character(), order = x) %>%
+      left_join(translate_table, by = "Original") %>% mutate(es = case_when(!is.na(Anonymous) ~
+                                                                              Anonymous, TRUE ~ Original))
+    if (is.factor(x)) {
+      y = factor(y$Anonymous, y %>% arrange(order) %>% pull(Anonymous) %>%
+                   unique())
+    }
+    else {
+      y = y$Anonymous
+    }
+    return(y)
+  }
+
+#' Anonymize
+#'
+#' Given a list of tables, anonimyzes the specified columns
+#'
+#' @param tables Dataframe list
+#' @param columns Columns to anonymize
+#' @return Original list, but with anonymized columns. If there were columns of same name in different tables, elements in common will have the same anonymization
+#' @export
+#'
+#' @examples
+#' anonymize(list(iris), "Species")
+anonymize <- function(tables, columns, seed = NULL){
+
+  if(class(tables) != 'list'){stop('tables must be a list')}
+  if(! 'tbl' %in% c(lapply(tables, class) %>% unlist() %>% unique())){'tables must be a dataframe list'}
+  if(class(columns) != 'character'){stop('columns must be character')}
+
+  columns_to_hide <- tables %>% lapply(names) %>% unlist() %>% intersect(columns)
+
+  if(length(columns_to_hide) > 0){
+    whole_table <- bind_rows(tables)
+
+    if(!is.null(seed)){
+      set.seed(seed)
+    }
+    reference_table <-
+      tibble(Column = columns_to_hide) %>%
+      rowwise() %>%
+      mutate(Valid_list = list(whole_table %>% .[[Column]] %>% unique() %>% .[!is.na(.)])) %>%
+      filter(length(Valid_list) > 0) %>%
+      mutate(Tabela_trad = list(
+        tibble(
+          Original = Valid_list,
+          Anonymous = stringi::stri_rand_strings(n = length(Valid_list), length = nchar(Valid_list[[1]] %>% as.character()), pattern = '[A-Z0-9]')
+        ))) %>%
+      ungroup()
+
+    for(t in seq_along(tables)){
+
+      for(col in names(tables[[t]]) %>% intersect(reference_table$Column)){
+        tables[[t]][col] <-
+          tables[[t]][[col]] %>%
+          translate_anonymous(translate_table = reference_table %>% filter(Column == col) %>% pull(Tabela_trad) %>% .[[1]] )
+      }
+
+    }
+  }
+
+  tables
+
+}

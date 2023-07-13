@@ -20,7 +20,8 @@ Imports: tidyverse,
     RMariaDB,
     pacman,
     jsonlite,
-    httr
+    httr,
+    cli
 Depends: dplyr,
     lubridate,
     openxlsx,

@@ -1,4 +1,10 @@
 #' Tenta executar um função repetidas vezes, com tempo de espera entre elas
+#' @param expr Expressão a ser executada
+#' @param tentativas Quantidade de tentativas
+#' @param Texto_funcao O texto que será exibido caso falhe
+#' @param tempo_espera_entre_tentativas O tempo de espera entre as tentativas, caso dê erro
+#' @param valor_se_erro Valor final caso dê erro. É possível usar stop("texto") para ainda dar erro após todas as tentativas.
+#' @export
 try_com_repeticao = function(
     expr, tentativas = 5, texto_funcao = "função x", tempo_espera_entre_tentativas = 0
     ,valor_se_erro = NULL

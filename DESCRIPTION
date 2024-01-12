@@ -1,7 +1,7 @@
 Package: vituripackage
 Type: Package
 Title: Pacote misterioso......................
-Version: 0.1.2
+Version: 0.1.3
 Author: G. Vituri <viturivituri@gmail.com>
 Maintainer: G. Vituri <viturivituri@gmail.com>
 Description: Funções pra mexer no Excel, manipular
